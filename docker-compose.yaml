@@ -1,0 +1,119 @@
+# Copyright IBM Corp. All Rights Reserved.
+#
+# SPDX-License-Identifier: Apache-2.0
+#
+
+version: '2'
+
+volumes:
+  orderer.nb-samlinux.com:
+  peer0.tracking.nb-samlinux.com:
+  peer1.tracking.nb-samlinux.com:
+
+networks:
+  nb-samlinux:
+
+services:
+
+  ca.tracking.nb-samlinux.com:
+    image: hyperledger/fabric-ca:1.4.7
+    environment:
+      - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
+      - FABRIC_CA_SERVER_CA_NAME=ca.tracking.nb-samlinux.com
+      - FABRIC_CA_SERVER_PORT=7054
+    ports:
+      - "7054:7054"
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/f9fb5db7dcc774f6eebcfdab4e0c9fb40cca8ed4457b5dbed455df8d4c5982d4_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
+    volumes:
+      - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/:/etc/hyperledger/fabric-ca-server-config
+    container_name: ca.tracking.nb-samlinux.com
+    networks:
+      - nb-samlinux
+
+  orderer.nb-samlinux.com:
+    container_name: orderer.nb-samlinux.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
+      - orderer.nb-samlinux.com:/var/hyperledger/production/orderer
+    ports:
+      - 7050
+    networks:
+      - nb-samlinux
+
+  peer0.tracking.nb-samlinux.com:
+    container_name: peer0.tracking.nb-samlinux.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer0.tracking.nb-samlinux.com
+      - CORE_PEER_ADDRESS=peer0.tracking.nb-samlinux.com:7051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
+      - CORE_PEER_CHAINCODEADDRESS=peer0.tracking.nb-samlinux.com:7052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.tracking.nb-samlinux.com:8051
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.tracking.nb-samlinux.com:7051
+      - CORE_PEER_LOCALMSPID=TrackingMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
+        - peer0.tracking.nb-samlinux.com:/var/hyperledger/production
+    ports:
+      - 7051
+    networks:
+      - nb-samlinux
+
+  peer1.tracking.nb-samlinux.com:
+    container_name: peer1.tracking.nb-samlinux.com
+    extends:
+      file: peer-base.yaml
+      service: peer-base
+    environment:
+      - CORE_PEER_ID=peer1.tracking.nb-samlinux.com
+      - CORE_PEER_ADDRESS=peer1.tracking.nb-samlinux.com:8051
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:8051
+      - CORE_PEER_CHAINCODEADDRESS=peer1.tracking.nb-samlinux.com:8052
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:8052
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.tracking.nb-samlinux.com:8051
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.tracking.nb-samlinux.com:7051
+      - CORE_PEER_LOCALMSPID=TrackingMSP
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
+        - peer1.tracking.nb-samlinux.com:/var/hyperledger/production
+    ports:
+      - 8051
+    networks:
+      - nb-samlinux
+
+  cli:
+    container_name: cli
+    image: hyperledger/fabric-tools:1.4.8
+    tty: true
+    stdin_open: true
+    environment:
+      - SYS_CHANNEL=$SYS_CHANNEL
+      - GOPATH=/opt/gopath
+      - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
+      - FABRIC_LOGGING_SPEC=DEBUG
+      - CORE_PEER_ID=cli
+      - CORE_PEER_ADDRESS=peer0.tracking.nb-samlinux.com:7051
+      - CORE_PEER_LOCALMSPID=TrackingMSP
+      - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/Admin@tracking.nb-samlinux.com/msp
+    working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
+    command: /bin/bash
+    volumes:
+        - /var/run/:/host/var/run/
+        - ./chaincode/:/opt/gopath/src/github.com/chaincode
+        - ./crypto-config:/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/
+        - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
+    depends_on:
+      - orderer.nb-samlinux.com
+      - peer0.tracking.nb-samlinux.com
+      - peer1.tracking.nb-samlinux.com
+    networks:
+      - nb-samlinux
