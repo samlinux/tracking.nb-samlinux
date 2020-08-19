@@ -17,16 +17,17 @@ services:
 
   ca.tracking.nb-samlinux.com:
     image: hyperledger/fabric-ca:1.4.7
+    container_name: ca.tracking.nb-samlinux.com
     environment:
       - FABRIC_CA_HOME=/etc/hyperledger/fabric-ca-server
       - FABRIC_CA_SERVER_CA_NAME=ca.tracking.nb-samlinux.com
       - FABRIC_CA_SERVER_PORT=7054
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/f9fb5db7dcc774f6eebcfdab4e0c9fb40cca8ed4457b5dbed455df8d4c5982d4_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/8475b0a1d7ab16ccfbc7a3c4d95164fbedcec5e1182d7a0898903beea434fbc8_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
     volumes:
       - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/:/etc/hyperledger/fabric-ca-server-config
-    container_name: ca.tracking.nb-samlinux.com
+  
     networks:
       - nb-samlinux
 
