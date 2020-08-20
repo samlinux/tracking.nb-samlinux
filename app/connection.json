@@ -1,0 +1,54 @@
+{
+  "name": "tracking.nb-samlinux.com",
+  "version": "1.0.0",
+  "client": {
+      "organization": "Tracking",
+      "connection": {
+          "timeout": {
+              "peer": {
+                  "endorser": "300"
+              }
+          }
+      }
+  },
+  "organizations": {
+      "Tracking": {
+          "mspid": "TrackingMSP",
+          "peers": [
+              "peer0.tracking.nb-samlinux.com",
+              "peer1.tracking.nb-samlinux.com"
+          ]
+      }
+  },
+  "peers": {
+      "peer0.tracking.nb-samlinux.com": {
+          "url": "grpc://localhost:7051",
+          
+          "grpcOptions": {
+              "ssl-target-name-override": "peer0.tracking.nb-samlinux.com",
+              "hostnameOverride": "peer0.tracking.nb-samlinux.com"
+          }
+      },
+      "peer1.tracking.nb-samlinux.com": {
+          "url": "grpc://localhost:8051",
+         
+          "grpcOptions": {
+              "ssl-target-name-override": "peer1.tracking.nb-samlinux.com",
+              "hostnameOverride": "peer1.tracking.nb-samlinux.com"
+          }
+      }
+  },
+  "orderers": {
+    "orderer.nb-samlinux.com": {
+      "url": "grpc://localhost:7050",
+      "tlsCACerts": {
+        "pem": ""
+      },
+      "grpcOptions": {
+        "ssl-target-name-override": "orderer.nb-samlinux.com",
+        "hostnameOverride": "orderer.nb-samlinux.com"
+      }
+    }
+  }
+
+}

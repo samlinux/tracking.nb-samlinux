@@ -1,0 +1,20 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -t 5000 test/specs.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "fabric-ca-client": "1.4.11",
+    "fabric-network": "1.4.11"
+  },
+  "author": "rbole",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^8.1.1",
+    "supertest": "^4.0.2"
+  }
+}

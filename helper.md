@@ -47,6 +47,8 @@ Enroll user identies.
 
 # first make sure you have an admin, if not enroll it
 export FABRIC_CA_CLIENT_HOME=./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/
+
+# enroll the ca admin
 fabric-ca-client enroll -d -u http://root:morgen@0.0.0.0:7054 
 
 # register and enroll user identities
@@ -115,7 +117,7 @@ peer chaincode install -n tracking -v 1.0 -p github.com/chaincode/tracking/
 export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
 peer chaincode invoke -n tracking -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
 
-export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/post_office/msp
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/post_box/msp
 peer chaincode invoke -n tracking -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
 
 peer chaincode query -n tracking -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
@@ -132,4 +134,28 @@ crypto-config/peerOrganizations/tracking.nb-samlinux.com/users/
 ├── post_box
 └── post_office
 ```
+
+## Start REST API
+Make sure .config.json is ready to use. Fill in the right values. 
+```bash
+{
+  "channel": "tracking",
+  "cc":"tracking",
+  "userName": "",
+  "ccpPath": "./connection.json",
+  "walletPath": ".wallet",
+  "addToWalletUser": "",
+  "addToWalletUserMspId": "TrackingMSP",
+  "addToWalletUserPk": "",
+  "addToWalletUseSignCert":""
+}
+
+```
+The REST API is controlled by pm2. The application is publicly accessible through the following URLs.
+
+- https://nb-tracking.samlinux.com/
+- https://nb-tracking.samlinux.com/api1
+- https://nb-tracking.samlinux.com/api1/getHistory/{packetID}
+
+
 

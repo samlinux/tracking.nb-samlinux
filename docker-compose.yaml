@@ -24,7 +24,7 @@ services:
       - FABRIC_CA_SERVER_PORT=7054
     ports:
       - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/8475b0a1d7ab16ccfbc7a3c4d95164fbedcec5e1182d7a0898903beea434fbc8_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3c70ff7671cb286c81d4073f8995de4efc14cc4379356af893218961fe625583_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
     volumes:
       - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/:/etc/hyperledger/fabric-ca-server-config
   
@@ -41,7 +41,7 @@ services:
       - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
       - orderer.nb-samlinux.com:/var/hyperledger/production/orderer
     ports:
-      - 7050
+      - "7050:7050"
     networks:
       - nb-samlinux
 
@@ -64,7 +64,7 @@ services:
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
         - peer0.tracking.nb-samlinux.com:/var/hyperledger/production
     ports:
-      - 7051
+      - "7051:7051"
     networks:
       - nb-samlinux
 
@@ -87,7 +87,7 @@ services:
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
         - peer1.tracking.nb-samlinux.com:/var/hyperledger/production
     ports:
-      - 8051
+      - "8051:8051"
     networks:
       - nb-samlinux
 

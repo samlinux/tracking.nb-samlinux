@@ -1,3 +1,7 @@
 channel-artifacts
 crypto-config
 .env
+.config.js
+app/node_modules
+app/.wallet
+app/.config.json
