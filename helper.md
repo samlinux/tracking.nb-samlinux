@@ -127,18 +127,21 @@ export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/pee
 peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
 
 peer chaincode query -n trackingCC -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
-
 ```
 
 ## Available user
 ```bash
-tree -L 1 crypto-config/peerOrganizations/tracking.nb-samlinux.com/users/
+tree -L 1 app/.wallet/
 
-crypto-config/peerOrganizations/tracking.nb-samlinux.com/users/
-├── Admin@tracking.nb-samlinux.com
+app/.wallet/
 ├── User1@tracking.nb-samlinux.com
+├── letter_box
 ├── post_box
-└── post_office
+├── post_office
+├── van_delivery_company_a
+├── van_delivery_company_b
+├── van_delivery_company_c
+└── warehouse_a
 ```
 
 ## Start REST API
@@ -159,9 +162,15 @@ Make sure .config.json is ready to use. Fill in the right values.
 ```
 The REST API is controlled by pm2. The application is publicly accessible through the following URLs.
 
+## The following API routes are available
+
 - https://nb-tracking.samlinux.com/
-- https://nb-tracking.samlinux.com/api1
-- https://nb-tracking.samlinux.com/api1/getHistory/{packetID}
-
-
+- GET: https://nb-tracking.samlinux.com/api1
+- GET: https://nb-tracking.samlinux.com/api1/getHistory/{packetID}
+- POST https://nb-tracking.samlinux.com/api1/store with Payload 
+  {"data": {
+      "key": "3",
+      "actor": "van_delivery_company_c"
+    }
+  }
 
