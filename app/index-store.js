@@ -14,6 +14,12 @@ module.exports = async function (req, connectionPool, helper) {
   let contract = helper.getContract(connectionPool, identity);
   
   try {
+    if(!contract){
+      let r = {
+        err: 'no valid contract'
+      }
+      return r;
+    } else {
      /* 
      Submit the specified transaction.
      Submit a transaction to the ledger. The transaction function name will be evaluated on the endorsing peers and then submitted to the ordering service for committing to the ledger. 
@@ -29,6 +35,7 @@ module.exports = async function (req, connectionPool, helper) {
       txId: result.TxId
     }
     return r;
+    }
   }
   catch(error){
     let r = {r:'Failed to submit transaction: '+error};

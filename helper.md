@@ -55,6 +55,11 @@ fabric-ca-client enroll -d -u http://root:morgen@0.0.0.0:7054
 # register and enroll user identities
 ./enrollUser.sh post_office
 ./enrollUser.sh post_box
+./enrollUser.sh van_delivery_company_a
+./enrollUser.sh warehouse_a
+./enrollUser.sh van_delivery_company_b
+./enrollUser.sh van_delivery_company_c
+./enrollUser.sh letter_box
 
 tree ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/users/
 ```
