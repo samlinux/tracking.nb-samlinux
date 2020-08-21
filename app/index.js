@@ -13,17 +13,14 @@
 
   // we include our API endpoint code.
   let getHistory = require('./index-getHistory');
+  let store = require('./index-store');
 
-  
   // We include our connection modul.
   let connectToContract = require('./connect'); 
 
   // We include our config file.
   let config = require('./.config.json');
-
-  // We define a global variable/pointer to catch an interrupt signal
-  // and do a disconnect from the gateway.
-  let gateway;
+  let helper = require('./helper.js')
 
 // ----------------------------------------
 // express.js 
@@ -39,12 +36,16 @@
   }));  
 
   // On start we connect to the gateway.
-  connectToContract(config).then(function(connection){
+  connectToContract(config).then(function(connectionPool){
+    
     // Connection is established we are ready to start the API server.
     // We set the global gateway pointer to disconnect the connect on interruption.
-    gateway = connection.gateway;
+   
+    console.log('- connection to fabric network ready for:')
+    connectionPool.forEach(connection => {
+      console.log('-- '+connection.gateway.currentIdentity._name)  
+    })
 
-    console.log('- connection to fabric network ready')
     // -------------------------------------------
     // We implement the api endpoints.
     // All results are formatted as json strings.
@@ -54,11 +55,18 @@
     app.get('/', function (req, res) {
       res.json({msg:'hello nb-tracking.samlinux.com api'});
     })
-  
+    
+    // We store a new or update an existing asset
+    // @postParam {json object} {data:{key:'', actor:''}}
+    app.post('/store', async function (req, res) {
+      let result = await store(req, connectionPool, helper)
+      res.json(result);
+    })
+
     // We want all versions of an asset
     // @apiParam {json object} key 
     app.get('/getHistory/:key', async function (req, res) {
-      let result = await getHistory(req, connection.contract)
+      let result = await getHistory(req, connectionPool, helper)
       res.json(result);
     })
 
@@ -73,7 +81,5 @@
 // ----------------------------------------
 process.on('SIGINT', async function  () {
   console.log("Caught interrupt signal -  start disconnect from the gateway");
-    // Disconnect from the gateway.
-    await gateway.disconnect();
     process.exit();
 });

@@ -63,6 +63,13 @@ func (t *TrackingAsset) storeTracking(stub shim.ChaincodeStubInterface, args []s
 		fmt.Println("Incorrect arguments. Expecting a key and a value")
 	}
 
+	// get TxId
+	txId := stub.GetTxID()
+	// get key
+	key := args[0]
+
+	fmt.Printf("Set Asset: %s, TxId:%s \n", key, txId)
+	
 	certificate, _ := stub.GetCreator()
 	commonName := getIdentityCommonName(certificate)
 	fmt.Printf("CommonName: %+s\n", commonName)
@@ -76,12 +83,12 @@ func (t *TrackingAsset) storeTracking(stub shim.ChaincodeStubInterface, args []s
 		fmt.Println("Failed to parse data")
 	}
 
-	err = stub.PutState(args[0], packetJSONasBytes)
+	err = stub.PutState(key, packetJSONasBytes)
 	if err != nil {
-		fmt.Printf("Failed to set asset: %s\n", args[0])
-	}
+		fmt.Printf("Failed to set asset: %s\n", key)
+	} 
 
-	return shim.Success(nil)
+	return shim.Success(t.getKeyAsBytes(key, txId))
 }
 
 // getHistory get all transactions of a given packet ID
@@ -163,3 +170,26 @@ func getIdentityCommonName(certificate []byte) string {
 	// fmt.Printf("Org: %+v\n", organization)
 	return cert.Subject.CommonName
 }
+
+// =========================================================
+// getKeyAsBytes, is a helper function to give the asset key
+// back after the inital storage of the asset
+// ========================================================
+func (t *TrackingAsset) getKeyAsBytes(key string, txId string) []byte {
+	// we construct a new buffer for the output
+	// we want finally a json object like {'Key':'uuid', 'TxId':'txId'}
+
+	var buffer bytes.Buffer
+	buffer.WriteString("{\"Key\":")
+	buffer.WriteString("\"")
+	buffer.WriteString(key)
+	buffer.WriteString("\",")
+	buffer.WriteString("\"TxId\":")
+	buffer.WriteString("\"")
+	buffer.WriteString(txId)
+	buffer.WriteString("\"")
+	buffer.WriteString("}")
+
+	return buffer.Bytes()
+}
+

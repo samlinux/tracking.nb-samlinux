@@ -5,16 +5,39 @@ const supertest = require('supertest');
 const util = require('util');
 const api = supertest('localhost:3000');
 
+function getRandomInt(max) {
+  return Math.floor(Math.random() * Math.floor(max));
+}
+
 describe("tracking.nb.samlinux.com API tests", function() {
   it("checks if api is running", async function() {
-    //this.skip();
+    this.skip();
     let result = await api.get('/')
     console.log(result.body)
   }) 
-    
-  it("get getHistory", async function() {
+  
+  it("create asset", async function() {
     //this.skip();
-    let key = '1';
+    let key = getRandomInt(1000000);
+    key = key.toString();
+    key = '30353'
+    let actor = 'post_office';
+    
+    let payload = { 
+      data: {
+        key: key,
+        actor: actor
+      }
+    }
+
+    let result = await api.post('/store').send(payload)
+    console.log(result.body);
+   
+  })
+
+  it("get getHistory", async function() {
+    this.skip();
+    let key = '356092';
 
     let result = await api.get('/getHistory/'+key)
 

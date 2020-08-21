@@ -9,7 +9,8 @@
   "dependencies": {
     "express": "^4.17.1",
     "fabric-ca-client": "1.4.11",
-    "fabric-network": "1.4.11"
+    "fabric-network": "1.4.11",
+    "lodash": "^4.17.20"
   },
   "author": "rbole",
   "license": "ISC",

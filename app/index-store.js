@@ -4,25 +4,30 @@
  */
 
 'use strict';
-const util = require('util');
+const _ = require('lodash');
 
-module.exports = async function (req, contract) {
+module.exports = async function (req, connectionPool, helper) {
 
   // Get the keys and value from the POST request.
-  let key = req.body.key;
+  let key = _.get(req,'body.data.key','1');
+  let identity = _.get(req,'body.data.actor','');
+  let contract = helper.getContract(connectionPool, identity);
   
   try {
      /* 
      Submit the specified transaction.
      Submit a transaction to the ledger. The transaction function name will be evaluated on the endorsing peers and then submitted to the ordering service for committing to the ledger. 
      */
-    let result = await contract.submitTransaction('store', key);
-    
+    let result = await contract.submitTransaction('set', key);
+
     result = result.toString();
     result = JSON.parse(result);
     
     // Prepare the return value.
-    let r = util.format('The state has successfully stored: Key: %s, TxId: %s ', result.Key, result.TxId);
+    let r = {
+      key: result.Key,
+      txId: result.TxId
+    }
     return r;
   }
   catch(error){

@@ -46,6 +46,7 @@ Enroll user identies.
 ```bash
 
 # first make sure you have an admin, if not enroll it
+cd /root/fabric/tracking.nb-samlinux
 export FABRIC_CA_CLIENT_HOME=./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/
 
 # enroll the ca admin
@@ -104,23 +105,23 @@ peer channel join -b $CHANNEL_NAME.block
 export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
 
 # install and instantiate chaincode on peer0
-peer chaincode install -n tracking -v 1.0 -p github.com/chaincode/tracking/
-peer chaincode instantiate -n tracking -v 1.0 -c '{"Args":[]}' -C tracking
+peer chaincode install -n trackingCC -v 1.0 -p github.com/chaincode/tracking/
+peer chaincode instantiate -n trackingCC -v 1.0 -c '{"Args":[]}' -C tracking
 
 # install chaincode on peer1
 export CORE_PEER_ADDRESS="peer1.tracking.nb-samlinux.com:8051"
-peer chaincode install -n tracking -v 1.0 -p github.com/chaincode/tracking/
+peer chaincode install -n trackingCC -v 1.0 -p github.com/chaincode/tracking/
 ```
 
 ## Query and invoke some transactions
 ```bash
 export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
-peer chaincode invoke -n tracking -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
+peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
 
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/post_box/msp
-peer chaincode invoke -n tracking -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
+peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
 
-peer chaincode query -n tracking -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
+peer chaincode query -n trackingCC -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
 
 ```
 
@@ -140,7 +141,7 @@ Make sure .config.json is ready to use. Fill in the right values.
 ```bash
 {
   "channel": "tracking",
-  "cc":"tracking",
+  "cc":"trackingCC",
   "userName": "",
   "ccpPath": "./connection.json",
   "walletPath": ".wallet",
