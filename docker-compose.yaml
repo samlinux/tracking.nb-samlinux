@@ -7,6 +7,8 @@ version: '2'
 
 volumes:
   orderer.nb-samlinux.com:
+  orderer2.nb-samlinux.com:
+  orderer3.nb-samlinux.com:
   peer0.tracking.nb-samlinux.com:
   peer1.tracking.nb-samlinux.com:
 
@@ -23,8 +25,8 @@ services:
       - FABRIC_CA_SERVER_CA_NAME=ca.tracking.nb-samlinux.com
       - FABRIC_CA_SERVER_PORT=7054
     ports:
-      - "7054:7054"
-    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3c70ff7671cb286c81d4073f8995de4efc14cc4379356af893218961fe625583_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
+      - 7054:7054
+    command: sh -c 'fabric-ca-server start --ca.certfile /etc/hyperledger/fabric-ca-server-config/ca.tracking.nb-samlinux.com-cert.pem --ca.keyfile /etc/hyperledger/fabric-ca-server-config/3caa0ccafd857b1f016b78ff64166205f6a7838a5d86177191db60f1c174f2eb_sk -b $CA_ADMIN_NAME:$CA_ADMIN_PW -d'
     volumes:
       - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/ca/:/etc/hyperledger/fabric-ca-server-config
   
@@ -39,11 +41,42 @@ services:
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/tls:/var/hyperledger/orderer/tls
       - orderer.nb-samlinux.com:/var/hyperledger/production/orderer
     ports:
-      - "7050:7050"
+      - 7050:7050
     networks:
       - nb-samlinux
+
+  orderer2.nb-samlinux.com:
+    container_name: orderer2.nb-samlinux.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/tls:/var/hyperledger/orderer/tls
+      - orderer2.nb-samlinux.com:/var/hyperledger/production/orderer
+    ports:
+      - 8050:7050
+    networks:
+      - nb-samlinux  
+      
+  orderer3.nb-samlinux.com:
+    container_name: orderer3.nb-samlinux.com
+    extends:
+      file: peer-base.yaml
+      service: orderer-base
+    volumes:
+      - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
+      - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/tls:/var/hyperledger/orderer/tls
+      - orderer3.nb-samlinux.com:/var/hyperledger/production/orderer
+    ports:
+      - 9050:7050
+    networks:
+      - nb-samlinux  
 
   peer0.tracking.nb-samlinux.com:
     container_name: peer0.tracking.nb-samlinux.com
@@ -62,9 +95,10 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/tls:/etc/hyperledger/fabric/tls
         - peer0.tracking.nb-samlinux.com:/var/hyperledger/production
     ports:
-      - "7051:7051"
+      - 7051:7051
     networks:
       - nb-samlinux
 
@@ -85,9 +119,10 @@ services:
     volumes:
         - /var/run/:/host/var/run/
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
+        - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/tls:/etc/hyperledger/fabric/tls
         - peer1.tracking.nb-samlinux.com:/var/hyperledger/production
     ports:
-      - "8051:8051"
+      - 8051:8051
     networks:
       - nb-samlinux
 
@@ -105,6 +140,13 @@ services:
       - CORE_PEER_ADDRESS=peer0.tracking.nb-samlinux.com:7051
       - CORE_PEER_LOCALMSPID=TrackingMSP
       - CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/Admin@tracking.nb-samlinux.com/msp
+
+      # enable one way TLS
+      - CORE_PEER_TLS_ENABLED=true
+      - CORE_PEER_TLS_CERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/tls/server.crt
+      - CORE_PEER_TLS_KEY_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/tls/server.key
+      - CORE_PEER_TLS_ROOTCERT_FILE=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/tls/ca.crt
+    
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -114,6 +156,8 @@ services:
         - ./channel-artifacts:/opt/gopath/src/github.com/hyperledger/fabric/peer/channel-artifacts
     depends_on:
       - orderer.nb-samlinux.com
+      - orderer2.nb-samlinux.com
+      - orderer3.nb-samlinux.com
       - peer0.tracking.nb-samlinux.com
       - peer1.tracking.nb-samlinux.com
     networks:

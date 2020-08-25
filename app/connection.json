@@ -22,16 +22,20 @@
   },
   "peers": {
       "peer0.tracking.nb-samlinux.com": {
-          "url": "grpc://localhost:7051",
-          
+          "url": "grpcs://localhost:7051",
+          "tlsCACerts": {
+            "pem":"-----BEGIN CERTIFICATE-----\nMIICeDCCAh+gAwIBAgIQQ7922g+GtkikaGb3DKy1XjAKBggqhkjOPQQDAjCBhjEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xITAfBgNVBAoTGHRyYWNraW5nLm5iLXNhbWxpbnV4LmNvbTEnMCUG\nA1UEAxMedGxzY2EudHJhY2tpbmcubmItc2FtbGludXguY29tMB4XDTIwMDgyNTA2\nMTkwMFoXDTMwMDgyMzA2MTkwMFowgYYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpD\nYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMSEwHwYDVQQKExh0cmFj\na2luZy5uYi1zYW1saW51eC5jb20xJzAlBgNVBAMTHnRsc2NhLnRyYWNraW5nLm5i\nLXNhbWxpbnV4LmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPPzNa4SIeIt\n0YjpKRsdBqFh9wf4xsTAU72o5u3KY0pBy/3n4KHKYflyKsaQjD1UV7d+HzGyRucG\nznyA6P8E9eSjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcD\nAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgU1NTB4AwltMl\nrXQmhF8JjLbIvsAAw0ILsNV58GxrCJ4wCgYIKoZIzj0EAwIDRwAwRAIgPcRs12m7\n+Fx78mKi7ZKeIta20FOtl1VJx2t8USyojHECID5/1fDGDEz9kkgAcaVlxOjhL4Fi\nNEGEdXIECHOa+nBU\n-----END CERTIFICATE-----" 
+          },
           "grpcOptions": {
               "ssl-target-name-override": "peer0.tracking.nb-samlinux.com",
               "hostnameOverride": "peer0.tracking.nb-samlinux.com"
           }
       },
       "peer1.tracking.nb-samlinux.com": {
-          "url": "grpc://localhost:8051",
-         
+          "url": "grpcs://localhost:8051",
+          "tlsCACerts": {
+            "pem":"-----BEGIN CERTIFICATE-----\nMIICeDCCAh+gAwIBAgIQQ7922g+GtkikaGb3DKy1XjAKBggqhkjOPQQDAjCBhjEL\nMAkGA1UEBhMCVVMxEzARBgNVBAgTCkNhbGlmb3JuaWExFjAUBgNVBAcTDVNhbiBG\ncmFuY2lzY28xITAfBgNVBAoTGHRyYWNraW5nLm5iLXNhbWxpbnV4LmNvbTEnMCUG\nA1UEAxMedGxzY2EudHJhY2tpbmcubmItc2FtbGludXguY29tMB4XDTIwMDgyNTA2\nMTkwMFoXDTMwMDgyMzA2MTkwMFowgYYxCzAJBgNVBAYTAlVTMRMwEQYDVQQIEwpD\nYWxpZm9ybmlhMRYwFAYDVQQHEw1TYW4gRnJhbmNpc2NvMSEwHwYDVQQKExh0cmFj\na2luZy5uYi1zYW1saW51eC5jb20xJzAlBgNVBAMTHnRsc2NhLnRyYWNraW5nLm5i\nLXNhbWxpbnV4LmNvbTBZMBMGByqGSM49AgEGCCqGSM49AwEHA0IABPPzNa4SIeIt\n0YjpKRsdBqFh9wf4xsTAU72o5u3KY0pBy/3n4KHKYflyKsaQjD1UV7d+HzGyRucG\nznyA6P8E9eSjbTBrMA4GA1UdDwEB/wQEAwIBpjAdBgNVHSUEFjAUBggrBgEFBQcD\nAgYIKwYBBQUHAwEwDwYDVR0TAQH/BAUwAwEB/zApBgNVHQ4EIgQgU1NTB4AwltMl\nrXQmhF8JjLbIvsAAw0ILsNV58GxrCJ4wCgYIKoZIzj0EAwIDRwAwRAIgPcRs12m7\n+Fx78mKi7ZKeIta20FOtl1VJx2t8USyojHECID5/1fDGDEz9kkgAcaVlxOjhL4Fi\nNEGEdXIECHOa+nBU\n-----END CERTIFICATE-----" 
+          },
           "grpcOptions": {
               "ssl-target-name-override": "peer1.tracking.nb-samlinux.com",
               "hostnameOverride": "peer1.tracking.nb-samlinux.com"
@@ -40,7 +44,7 @@
   },
   "orderers": {
     "orderer.nb-samlinux.com": {
-      "url": "grpc://localhost:7050",
+      "url": "grpcs://localhost:7050",
       "tlsCACerts": {
         "pem": ""
       },
@@ -48,7 +52,27 @@
         "ssl-target-name-override": "orderer.nb-samlinux.com",
         "hostnameOverride": "orderer.nb-samlinux.com"
       }
-    }
+    },
+    "orderer2.nb-samlinux.com": {
+        "url": "grpcs://localhost:8050",
+        "tlsCACerts": {
+          "pem": ""
+        },
+        "grpcOptions": {
+          "ssl-target-name-override": "orderer2.nb-samlinux.com",
+          "hostnameOverride": "orderer2.nb-samlinux.com"
+        }
+      },
+      "orderer3.nb-samlinux.com": {
+        "url": "grpcs://localhost:9050",
+        "tlsCACerts": {
+          "pem": ""
+        },
+        "grpcOptions": {
+          "ssl-target-name-override": "orderer3.nb-samlinux.com",
+          "hostnameOverride": "orderer3.nb-samlinux.com"
+        }
+      }
   }
 
 }

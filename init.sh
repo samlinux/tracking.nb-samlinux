@@ -31,7 +31,7 @@ echo "#########  Create the orderer genesis block  ####"
 echo "#################################################"
 mkdir channel-artifacts
 
-configtxgen -profile OneOrgsOrdererGenesis -channelID $SYS_CHANNEL_NAME -outputBlock ./channel-artifacts/genesis.block
+configtxgen -profile OneOrgMultiNodeEtcdRaft -channelID $SYS_CHANNEL_NAME -outputBlock ./channel-artifacts/genesis.block
 
 echo "###########################################################"
 echo "#########  Create a Channel Configuration Transaction  ####"

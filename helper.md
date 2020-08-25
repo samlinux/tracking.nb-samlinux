@@ -98,9 +98,10 @@ docker exec -it cli bash
 # set some environment vars
 export CHANNEL_NAME=tracking 
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/Admin@tracking.nb-samlinux.com/msp
+export TLS_ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/nb-samlinux.com/tlsca/tlsca.nb-samlinux.com-cert.pem
 
 # create channel
-peer channel create -o orderer.nb-samlinux.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel_$CHANNEL_NAME.tx
+peer channel create -o orderer.nb-samlinux.com:7050 -c $CHANNEL_NAME -f ./channel-artifacts/channel_$CHANNEL_NAME.tx --tls --cafile $TLS_ORDERER_CA 
 
 # join channel peer0
 peer channel join -b $CHANNEL_NAME.block
@@ -111,7 +112,7 @@ export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
 
 # install and instantiate chaincode on peer0
 peer chaincode install -n trackingCC -v 1.0 -p github.com/chaincode/tracking/
-peer chaincode instantiate -n trackingCC -v 1.0 -c '{"Args":[]}' -C tracking
+peer chaincode instantiate -n trackingCC -v 1.0 -c '{"Args":[]}' -C tracking --tls --cafile $TLS_ORDERER_CA 
 
 # install chaincode on peer1
 export CORE_PEER_ADDRESS="peer1.tracking.nb-samlinux.com:8051"
@@ -121,15 +122,23 @@ peer chaincode install -n trackingCC -v 1.0 -p github.com/chaincode/tracking/
 ## Query and invoke some transactions
 ```bash
 export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
-peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
+peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME --tls --cafile $TLS_ORDERER_CA
 
 export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/post_box/msp
-peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME 
+peer chaincode invoke -n trackingCC -c '{"Args":["set","1"]}' -C $CHANNEL_NAME --tls --cafile $TLS_ORDERER_CA 
 
 peer chaincode query -n trackingCC -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
 ```
 
+Extract and add ca.crt to the connection.json profile for peer0 and peer1
+```bash
+sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/tls/ca.crt
+
+sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/tls/ca.crt
+```
+
 ## Available user
+
 ```bash
 tree -L 1 app/.wallet/
 

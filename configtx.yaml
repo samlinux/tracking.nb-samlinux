@@ -186,7 +186,7 @@ Orderer: &OrdererDefaults
 
     # Orderer Type: The orderer implementation to start
     # Available types are "solo","kafka"  and "etcdraft"
-    OrdererType: solo
+    OrdererType: etcdraft
 
     Addresses:
         - orderer.nb-samlinux.com:7050
@@ -208,7 +208,28 @@ Orderer: &OrdererDefaults
         # the serialized messages in a batch. A message larger than the preferred
         # max bytes will result in a batch larger than preferred max bytes.
         PreferredMaxBytes: 512 KB
-
+    
+    # EtcdRaft defines configuration which must be set when the "etcdraft"
+    # orderertype is chosen.
+    EtcdRaft:
+        # The set of Raft replicas for this network. For the etcd/raft-based
+        # implementation, we expect every replica to also be an OSN. Therefore,
+        # a subset of the host:port items enumerated in this list should be
+        # replicated under the Orderer.Addresses key above.
+        Consenters:
+            - Host: orderer.nb-samlinux.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/tls/server.crt
+            - Host: orderer2.nb-samlinux.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/tls/server.crt
+            - Host: orderer3.nb-samlinux.com
+              Port: 7050
+              ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/tls/server.crt
+              ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/tls/server.crt
+           
 
     # Organizations is the list of orgs which are defined as participants on
     # the orderer side of the network
@@ -274,6 +295,43 @@ Channel: &ChannelDefaults
 #
 ################################################################################
 Profiles:
+  OneOrgMultiNodeEtcdRaft:
+      <<: *ChannelDefaults
+      Capabilities:
+          <<: *ChannelCapabilities
+      Orderer:
+          <<: *OrdererDefaults
+          OrdererType: etcdraft
+          EtcdRaft:
+              Consenters:
+              - Host: orderer.nb-samlinux.com
+                Port: 7050
+                ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/tls/server.crt
+                ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/tls/server.crt
+              - Host: orderer2.nb-samlinux.com
+                Port: 7050
+                ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/tls/server.crt
+                ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/tls/server.crt
+              - Host: orderer3.nb-samlinux.com
+                Port: 7050
+                ClientTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/tls/server.crt
+                ServerTLSCert: crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/tls/server.crt
+          Addresses:
+              - orderer.nb-samlinux.com:7050
+              - orderer2.nb-samlinux.com:7050
+              - orderer3.nb-samlinux.com:7050
+          Organizations:
+              - *OrdererOrg
+          Capabilities:
+              <<: *OrdererCapabilities
+      Application:
+          <<: *ApplicationDefaults
+          Organizations:
+          - <<: *OrdererOrg
+      Consortiums:
+          nb-samlinux:
+              Organizations:
+              - *Tracking
 
   OneOrgsOrdererGenesis:
       <<: *ChannelDefaults
@@ -287,6 +345,7 @@ Profiles:
           nb-samlinux:
             Organizations:
                 - *Tracking
+
   OneOrgsChannel:
       Consortium: nb-samlinux
       <<: *ChannelDefaults
