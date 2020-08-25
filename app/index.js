@@ -10,6 +10,7 @@
   // We include some requirement.
   const express = require('express');
   const bodyParser = require('body-parser'); 
+  const cors = require('cors')
 
   // we include our API endpoint code.
   let getHistory = require('./index-getHistory');
@@ -28,6 +29,8 @@
 
   // We create the express base instance.
   const app = express();
+  // enable cors
+  app.use(cors())
 
   // We include the bodyParser because of the post requests.
   app.use(bodyParser.json());      

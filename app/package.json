@@ -7,6 +7,7 @@
     "test": "mocha -t 5000 test/specs.js"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "express": "^4.17.1",
     "fabric-ca-client": "1.4.11",
     "fabric-network": "1.4.11",
