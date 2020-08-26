@@ -4,8 +4,11 @@
  */
 
 'use strict';
-module.exports = async function (req, connectionPool, helper) {
+const _ = require('lodash');
+const moment = require('moment');
 
+module.exports = async function (req, connectionPool, helper) {
+    
   // Get the key from the GET request and set it to lowercase, because of the chaincode.
   let queryKey = req.params.key;
 
@@ -19,9 +22,16 @@ module.exports = async function (req, connectionPool, helper) {
     let result = await contract.evaluateTransaction('history',queryKey);
 
     // Construct the finale return object.
+    let tmp = JSON.parse(result.toString());
+
+    _.forEach(tmp, (v,k) => {
+      tmp[k].Timestamp = moment(new Date(v.Timestamp)).format("DD.MM.YYYY HH:mm:ss");
+    })
+    tmp = JSON.stringify(tmp);
+    
     let r = {
       key: queryKey,
-      value: result.toString()
+      value: tmp
     };
     return r;
   } catch(err){

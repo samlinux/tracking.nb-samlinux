@@ -11,7 +11,8 @@
     "express": "^4.17.1",
     "fabric-ca-client": "1.4.11",
     "fabric-network": "1.4.11",
-    "lodash": "^4.17.20"
+    "lodash": "^4.17.20",
+    "moment": "^2.27.0"
   },
   "author": "rbole",
   "license": "ISC",
