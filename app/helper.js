@@ -1,6 +1,8 @@
 (function(){
   'use strict';
   const _ = require('lodash');
+  const moment = require('moment');
+
   /**
    * delivers the correct contract to the given identity
 	 */ 	
@@ -13,7 +15,7 @@
       }
     }
     if(_.has(contract,'gateway.currentIdentity._name')){
-      console.log(contract.gateway.currentIdentity._name)
+      console.log(contract.gateway.currentIdentity._name,' - ',moment().format('DD.MM.YYYY HH:mm:ss'));
     }
 
     //console.log(Object.keys(connectionPool[0].gateway.currentIdentity)) 
