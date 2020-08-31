@@ -95,53 +95,52 @@ export default {
   }),
   methods: {
     refresh: async function () {
-      if (!this.pId) {
-        this.pId = "1";
-      }
       this.history = [];
       this.showHistory = false;
       this.packageExists = false;
       this.packageDelivered = false;
       this.firstDestination = null;
       this.lastDestination = null;
-      const response = await fetch(
-        "https://nb-tracking.samlinux.com/api1/getHistory/" + this.pId
-      );
-      const tmp = await response.json();
+      if (this.pId && this.pId !== "") {
+        const response = await fetch(
+          "https://nb-tracking.samlinux.com/api1/getHistory/" + this.pId
+        );
+        const tmp = await response.json();
 
-      this.keyId = tmp.key;
-      let a = JSON.parse(tmp.value);
+        this.keyId = tmp.key;
+        let a = JSON.parse(tmp.value);
 
-      if (a.length > 0) {
-        this.packageExists = true;
-        a.forEach((element) => {
-          let p = {};
-          let date = "date not obtained";
-          let time = "time not obtained";
-          p.txId = element.TxId;
-          p.owner = element.Packet.owner;
-          p.ts = element.Timestamp;
-          if (element.Timestamp && element.Timestamp !== "") {
-            const tsSplit = element.Timestamp.split(" ");
-            if (tsSplit[0] && tsSplit[0] !== "") {
-              date = tsSplit[0];
+        if (a.length > 0) {
+          this.packageExists = true;
+          a.forEach((element) => {
+            let p = {};
+            let date = "date not obtained";
+            let time = "time not obtained";
+            p.txId = element.TxId;
+            p.owner = element.Packet.owner;
+            p.ts = element.Timestamp;
+            if (element.Timestamp && element.Timestamp !== "") {
+              const tsSplit = element.Timestamp.split(" ");
+              if (tsSplit[0] && tsSplit[0] !== "") {
+                date = tsSplit[0];
+              }
+              if (tsSplit[1] && tsSplit[1] !== "") {
+                time = tsSplit[1];
+              }
             }
-            if (tsSplit[1] && tsSplit[1] !== "") {
-              time = tsSplit[1];
+            p.date = date;
+            p.time = time;
+            if (p.owner === "letter_box") {
+              p.delivered = true;
+              this.packageDelivered = true;
             }
-          }
-          p.date = date;
-          p.time = time;
-          if (p.owner === "letter_box") {
-            p.delivered = true;
-            this.packageDelivered = true;
-          }
-          if (!this.firstDestination) {
-            this.firstDestination = p;
-          }
-          this.lastDestination = p;
-          this.history.unshift(p);
-        });
+            if (!this.firstDestination) {
+              this.firstDestination = p;
+            }
+            this.lastDestination = p;
+            this.history.unshift(p);
+          });
+        }
       }
       this.showHistory = true;
     },
