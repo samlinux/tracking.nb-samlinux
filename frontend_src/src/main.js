@@ -7,10 +7,14 @@ import VueMaterial from 'vue-material'
 import 'vue-material/dist/vue-material.min.css'
 import './appTheme.scss'
 
-Vue.config.productionTip = false
+import VueQrcodeReader from "vue-qrcode-reader";
+
+Vue.config.productionTip = false;
 
 Vue.use(VueMoment, {});
-Vue.use(VueMaterial)
+Vue.use(VueMaterial);
+
+Vue.use(VueQrcodeReader);
 
 new Vue({
   router,

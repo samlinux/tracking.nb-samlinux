@@ -54,6 +54,17 @@
           </md-card-content>
         </md-card>
       </form>
+      <div class="qr-code-scanner" v-bind:class="{ 'no-camera-available': qrInitError }">
+        <md-card class="md-layout-item md-small-size-100">
+          <md-card-header>
+            <div class="md-title">Package QR Scanner</div>
+          </md-card-header>
+          <md-card-content>
+            <qrcode-stream class="qr-code-stream" @decode="onQrDecode" @init="onQrInit"></qrcode-stream>
+            <div v-if="qrInitError" class="qr-init-error">Error: {{ qrInitError }}!</div>
+          </md-card-content>
+        </md-card>
+      </div>
     </div>
   </layout-default>
 </template>
@@ -83,8 +94,49 @@ export default {
     msgTimeout: null,
     checkFormValidity: false,
     transactionInProgress: false,
+    qrInitError: null,
   }),
   methods: {
+    onQrDecode(result) {
+      console.log("qr-decoded");
+      console.log(result);
+      this.pId = result;
+    },
+    async onQrInit(promise) {
+      try {
+        await promise;
+        delete this.qrInitError;
+      } catch (error) {
+        if (error.name === "NotAllowedError") {
+          this.qrInitError = "You need to grant camera access permisson";
+        } else if (error.name === "NotFoundError") {
+          this.qrInitError = "No camera available";
+        } else if (error.name === "NotReadableError") {
+          this.qrInitError = "Is the camera already in use?";
+        } else if (error.name === "OverconstrainedError") {
+          this.qrInitError = "Installed cameras are not suitable";
+        } else if (error.name === "StreamApiNotSupportedError") {
+          this.qrInitError =
+            "This browser does not support using this device's camera";
+        } else if (
+          ["NotSupportedError", "InsecureContextError"].indexOf(error.name) >= 0
+        ) {
+          this.qrInitError = "Secure context required (HTTPS)";
+        } else {
+          this.qrInitError = "No camera access available";
+        }
+      }
+    },
+    itemLabelTemplate(owner) {
+      let itemLabel = "";
+      if (owner && owner !== "") {
+        itemLabel += owner;
+        if (owner === "letter_box") {
+          itemLabel += " (package delivered)";
+        }
+      }
+      return itemLabel;
+    },
     store: async function () {
       if (this.transactionInProgress) return;
       this.response = null;
@@ -119,16 +171,6 @@ export default {
         this.formError = "Package ID and Owner Identity must be set!";
         this.checkFormValidity = true;
       }
-    },
-    itemLabelTemplate(owner) {
-      let itemLabel = "";
-      if (owner && owner !== "") {
-        itemLabel += owner;
-        if (owner === "letter_box") {
-          itemLabel += " (package delivered)";
-        }
-      }
-      return itemLabel;
     },
   },
   computed: {
@@ -165,5 +207,17 @@ export default {
 .rq-spinner-container {
   float: right;
   height: 36px;
+}
+.qr-code-scanner {
+  margin-top: 10px;
+  &.no-camera-available {
+    .qr-code-stream {
+      display: none;
+    }
+  }
+  .qr-init-error {
+    font-weight: bold;
+    color: red;
+  }
 }
 </style>

@@ -5,7 +5,7 @@
         <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
           <md-icon>menu</md-icon>
         </md-button>
-        <span class="md-title">Package Tracking</span>
+        <span class="md-title">SingPost Secure Tracking</span>
       </md-app-toolbar>
 
       <md-app-drawer :md-active.sync="menuVisible">
@@ -97,6 +97,9 @@ export default {
   height: 100vh;
   box-sizing: border-box;
   border: 0;
+  .md-title {
+    font-size: 19px;
+  }
 }
 .md-content {
   padding: 16px;
