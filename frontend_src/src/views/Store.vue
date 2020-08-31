@@ -19,6 +19,9 @@
                   required
                   :disabled="transactionInProgress"
                 />
+                <md-button class="md-icon-button" style="margin: 0;" @click="showQrScanner = true">
+                  <md-icon>qr_code_scanner</md-icon>
+                </md-button>
               </md-field>
             </div>
 
@@ -54,18 +57,19 @@
           </md-card-content>
         </md-card>
       </form>
-      <div class="qr-code-scanner" v-bind:class="{ 'no-camera-available': qrInitError }">
-        <md-card class="md-layout-item md-small-size-100">
-          <md-card-header>
-            <div class="md-title">Package QR Scanner</div>
-          </md-card-header>
-          <md-card-content>
-            <qrcode-stream class="qr-code-stream" @decode="onQrDecode" @init="onQrInit"></qrcode-stream>
-            <div v-if="qrInitError" class="qr-init-error">Error: {{ qrInitError }}!</div>
-          </md-card-content>
-        </md-card>
-      </div>
     </div>
+    <md-dialog class="scan-qr-dialog" :md-fullscreen="false" :md-active.sync="showQrScanner">
+      <md-dialog-title>Scan QR package ID</md-dialog-title>
+      <md-dialog-content class="qr-dialog-container">
+        <div class="qr-code-scanner" v-bind:class="{ 'no-camera-available': qrInitError }">
+          <qrcode-stream class="qr-code-stream" @decode="onQrDecode" @init="onQrInit"></qrcode-stream>
+          <div v-if="qrInitError" class="qr-init-error">Error: {{ qrInitError }}!</div>
+        </div>
+      </md-dialog-content>
+      <md-dialog-actions>
+        <md-button class="md-primary" @click="showQrScanner = false">Close</md-button>
+      </md-dialog-actions>
+    </md-dialog>
   </layout-default>
 </template>
 
@@ -95,12 +99,12 @@ export default {
     checkFormValidity: false,
     transactionInProgress: false,
     qrInitError: null,
+    showQrScanner: false,
   }),
   methods: {
     onQrDecode(result) {
-      console.log("qr-decoded");
-      console.log(result);
       this.pId = result;
+      this.showQrScanner = false;
     },
     async onQrInit(promise) {
       try {
@@ -218,6 +222,14 @@ export default {
   .qr-init-error {
     font-weight: bold;
     color: red;
+  }
+}
+@media only screen and (max-width: 600px) {
+  .scan-qr-dialog {
+    .md-dialog-container {
+      max-width: 96%;
+      width: 96%;
+    }
   }
 }
 </style>
