@@ -17,7 +17,7 @@
               </md-card-actions>
               <div v-if="showHistory && !packageExists" style="text-align: center; color: red;">
                 <small>
-                  <b>Sorry, we cannot detect a package for your tracking number.</b>
+                  <b>Sorry, we cannot detect a package with the given package ID.</b>
                 </small>
               </div>
             </md-card-content>
@@ -78,6 +78,7 @@
 
 <script>
 import LayoutDefault from "../layouts/LayoutDefault.vue";
+import { API_LOCATION } from "../config/env";
 export default {
   name: `Home`,
   components: {
@@ -102,9 +103,7 @@ export default {
       this.firstDestination = null;
       this.lastDestination = null;
       if (this.pId && this.pId !== "") {
-        const response = await fetch(
-          "https://nb-tracking.samlinux.com/api1/getHistory/" + this.pId
-        );
+        const response = await fetch(API_LOCATION + "getHistory/" + this.pId);
         const tmp = await response.json();
 
         this.keyId = tmp.key;

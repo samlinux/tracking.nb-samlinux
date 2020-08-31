@@ -60,7 +60,7 @@
 
 <script>
 import LayoutDefault from "../layouts/LayoutDefault.vue";
-
+import { API_LOCATION } from "../config/env";
 export default {
   name: "Store",
   components: {
@@ -103,10 +103,7 @@ export default {
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify(payload),
         };
-        let ApiResponse = await fetch(
-          "https://nb-tracking.samlinux.com/api1/store",
-          requestOptions
-        );
+        let ApiResponse = await fetch(API_LOCATION + "store", requestOptions);
         // const responseData = await ApiResponse.json();
         // this.response = "Package history successfully updated: " + responseData.txId;
         await ApiResponse.json();
