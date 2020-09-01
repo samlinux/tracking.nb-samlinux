@@ -33,6 +33,7 @@ export default {
             } else {
                 this.pId = "";
             }
+            this.refresh();
         },
         refresh: async function () {
             this.history = [];
