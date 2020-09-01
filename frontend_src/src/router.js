@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 
-const Home = () => import('./views/Home.vue');
-const Store = () => import('./views/Store.vue');
+const History = () => import('./components/history/History.vue');
+const Store = () => import('./components/store/Store.vue');
 
 Vue.use(Router);
 
@@ -11,7 +11,7 @@ export default new Router({
     {
       path: '/history',
       name: 'history',
-      component: Home,
+      component: History,
     },
     {
       path: '/store',
@@ -21,7 +21,7 @@ export default new Router({
     {
       path: '*',
       name: '',
-      component: Home,
+      component: History,
     },
   ],
   mode: 'history',

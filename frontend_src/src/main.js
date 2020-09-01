@@ -16,6 +16,9 @@ Vue.use(VueMaterial);
 
 Vue.use(VueQrcodeReader);
 
+import QrCodeScanner from "./components/qr-code-scanner/QrCodeScanner.vue";
+Vue.component("QrCodeScanner", QrCodeScanner);
+
 new Vue({
   router,
   render: h => h(App),
