@@ -27,8 +27,8 @@ export default {
         onQrDecode(result) {
             let scanResult = "";
             if (result && result !== "") {
-                if (result.indexOf("history/") >= 0) {
-                    const resultSplit = result.split("history/");
+                if (result.indexOf("pid=") >= 0) {
+                    const resultSplit = result.split("pid=");
                     if (resultSplit[1] && resultSplit[1] !== "") {
                         scanResult = resultSplit[1];
                     }
