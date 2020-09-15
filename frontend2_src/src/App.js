@@ -6,7 +6,7 @@ export default {
         menuModules: {
             history: {
                 moduleName: "Package History",
-                modulePath: "/app2/history",
+                modulePath: "/history",
             }
         },
     }),

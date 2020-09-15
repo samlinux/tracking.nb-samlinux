@@ -8,7 +8,7 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/app2/history',
+      path: '/history',
       name: 'history',
       component: History,
     },
