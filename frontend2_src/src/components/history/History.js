@@ -69,7 +69,7 @@ export default {
                         }
                         p.date = date;
                         p.time = time;
-                        if (p.owner === "letter_box") {
+                        if (p.owner === "aircraft_takeoff") {
                             p.delivered = true;
                             this.packageDelivered = true;
                         }

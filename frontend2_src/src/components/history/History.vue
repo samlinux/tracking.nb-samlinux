@@ -11,13 +11,6 @@
               <label for="pId">Package ID</label>
               <md-field>
                 <md-input v-on:keydown.enter.prevent="refresh" name="pId" id="pId" v-model="pId" />
-                <!-- <md-button
-                  class="md-icon-button"
-                  style="margin: 0;"
-                  @click="showQrScanner = !showQrScanner;"
-                >
-                  <md-icon>qr_code_scanner</md-icon>
-                </md-button>-->
               </md-field>
               <md-card-actions>
                 <md-button type="button" v-on:click="refresh" class="md-primary md-raised">check</md-button>
@@ -80,8 +73,6 @@
         </div>
       </div>
     </div>
-    <!-- Component: QrCodeScanner -->
-    <QrCodeScanner v-bind:openDialog="showQrScanner" v-on:qrCodeScanned="onQrDecode" />
   </layout-default>
 </template>
 
