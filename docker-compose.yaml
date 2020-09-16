@@ -1,7 +1,3 @@
-# Copyright IBM Corp. All Rights Reserved.
-#
-# SPDX-License-Identifier: Apache-2.0
-#
 
 version: '2'
 
@@ -38,6 +34,8 @@ services:
     extends:
       file: peer-base.yaml
       service: orderer-base
+    environment:
+      - CORE_OPERATIONS_LISTENADDRESS=orderer.nb-samlinux.com:8443
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
@@ -53,6 +51,8 @@ services:
     extends:
       file: peer-base.yaml
       service: orderer-base
+    environment:
+      - CORE_OPERATIONS_LISTENADDRESS=orderer2.nb-samlinux.com:8444
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer2.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
@@ -68,6 +68,8 @@ services:
     extends:
       file: peer-base.yaml
       service: orderer-base
+    environment:
+      - CORE_OPERATIONS_LISTENADDRESS=orderer3.nb-samlinux.com:8445
     volumes:
       - ./channel-artifacts/genesis.block:/var/hyperledger/orderer/orderer.genesis.block
       - ./crypto-config/ordererOrganizations/nb-samlinux.com/orderers/orderer3.nb-samlinux.com/msp:/var/hyperledger/orderer/msp
@@ -92,6 +94,7 @@ services:
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer1.tracking.nb-samlinux.com:8051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.tracking.nb-samlinux.com:7051
       - CORE_PEER_LOCALMSPID=TrackingMSP
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.tracking.nb-samlinux.com:9443
     volumes:
         - /var/run/:/host/var/run/
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer0.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp
@@ -116,6 +119,7 @@ services:
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer1.tracking.nb-samlinux.com:8051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.tracking.nb-samlinux.com:7051
       - CORE_PEER_LOCALMSPID=TrackingMSP
+      - CORE_OPERATIONS_LISTENADDRESS=peer1.tracking.nb-samlinux.com:10443
     volumes:
         - /var/run/:/host/var/run/
         - ./crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/msp:/etc/hyperledger/fabric/msp

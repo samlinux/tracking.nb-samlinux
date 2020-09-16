@@ -137,7 +137,7 @@ sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' crypto-config/peerOrganizations/tracking.nb
 sed -E ':a;N;$!ba;s/\r{0,1}\n/\\n/g' crypto-config/peerOrganizations/tracking.nb-samlinux.com/peers/peer1.tracking.nb-samlinux.com/tls/ca.crt
 ```
 
-## Available user
+## Available identities app1
 
 ```bash
 tree -L 1 app/.wallet/
@@ -183,3 +183,33 @@ The REST API is controlled by pm2. The application is publicly accessible throug
     }
   }
 
+## Monitoring - add operations service
+Prometheus Server mit Grafana dashboard.
+
+https://nb-tracking.samlinux.com/grafana/login
+
+
+```bash
+docker-compose -f docker-compose-monitor.yaml up -d
+```
+## Available identities app2
+
+```bash
+root@fabric02:~/fabric/tracking.nb-samlinux/app2# tree .wallet/
+.wallet/
+├── User1@tracking.nb-samlinux.com
+├── aircraft_bay
+├── aircraft_takeoff
+├── export_docks
+├── freight_forwarder_warehouse
+├── loaded_in_trolley
+├── loaded_into_aircraft
+├── storage_location
+└── truck
+```
+
+
+## Bunyan logs app2
+```bash
+pm2 logs --raw | /root/fabric/tracking.nb-samlinux/app2/node_modules/bunyan/bin/bunyan -o short
+```

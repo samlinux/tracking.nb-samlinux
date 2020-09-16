@@ -1,0 +1,33 @@
+
+version: '2'
+volumes:
+  grafana.nb-samlinux.com:
+
+networks:
+  nb-samlinux:
+
+services:
+
+  prometheus.nb-samlinux.com:
+    container_name: prometheus.nb-samlinux.com
+    image: prom/prometheus
+    volumes:
+      - ./prometheus.yaml:/prometheus.yml
+    command:
+      - '--config.file=/prometheus.yml'
+    ports:
+      - "127.0.0.1:9090:9090"
+    networks:
+      - nb-samlinux
+
+  grafana.nb-samlinux.com:
+    image: grafana/grafana
+    depends_on:
+      - prometheus.nb-samlinux.com
+    volumes:
+      - grafana.nb-samlinux.com:/var/lib/grafana
+      - ./grafana.ini:/etc/grafana/grafana.ini
+    ports:
+      - "127.0.0.1:3010:3000"
+    networks:
+      - nb-samlinux

@@ -36,13 +36,13 @@ async function doTest2(maxInt){
 
 describe("tracking.nb.samlinux.com API tests", function() {
   it("checks if api is running", async function() {
-    //this.skip();
+    this.skip();
     let result = await api.get('/')
     console.log(result.body)
   }) 
   
   it("create asset", async function() {
-    this.skip();
+    //this.skip();
     let maxInt = 1000000;
     setInterval(doTest2, 100, maxInt);
   })
