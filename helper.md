@@ -208,6 +208,16 @@ root@fabric02:~/fabric/tracking.nb-samlinux/app2# tree .wallet/
 └── truck
 ```
 
+1. freight_forwarder_warehouse - Freight forwarder warehouse
+2. truck - Truck
+3. export_docks Export - docks
+4. storage_location - Storage location
+5. loaded_in_trolley - Loaded in trolley
+6. aircraft_bay - Aircraft bay
+7. loaded_into_aircraft - Loaded into aircraft
+8. aircraft_takeoff - Aircarft takeoff
+
+
 
 ## Bunyan logs app2
 ```bash
