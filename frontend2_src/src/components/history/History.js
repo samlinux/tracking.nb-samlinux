@@ -49,17 +49,19 @@ export default {
                 this.keyId = tmp.key;
                 let a = JSON.parse(tmp.value);
 
+                const history = [];
                 if (a.length > 0) {
                     this.packageExists = true;
                     a.forEach((element) => {
                         let p = {};
                         let date = "date not obtained";
                         let time = "time not obtained";
+                        let sortDate = '';
                         p.txId = element.TxId;
                         p.owner = element.Packet.owner;
-                        p.ts = element.Timestamp;
-                        if (element.Timestamp && element.Timestamp !== "") {
-                            const tsSplit = element.Timestamp.split(" ");
+                        p.ts = element.Packet.scanned;
+                        if (element.Packet.scanned && element.Packet.scanned !== "") {
+                            const tsSplit = element.Packet.scanned.split(" ");
                             if (tsSplit[0] && tsSplit[0] !== "") {
                                 date = tsSplit[0];
                             }
@@ -69,6 +71,10 @@ export default {
                         }
                         p.date = date;
                         p.time = time;
+                        // sortDate generieren
+                        const sortDateSplit = date.split(".");
+                        sortDate += sortDateSplit[2] + "-" + sortDateSplit[1] + "-" + sortDateSplit[0];
+                        p.sort = new Date(sortDate + " " + time);
                         if (p.owner === "aircraft_takeoff") {
                             p.delivered = true;
                             this.packageDelivered = true;
@@ -77,9 +83,13 @@ export default {
                             this.firstDestination = p;
                         }
                         this.lastDestination = p;
-                        this.history.unshift(p);
+                        history.push(p);
+                    });
+                    history.sort(function (a, b) {
+                        return b.sort - a.sort;
                     });
                 }
+                this.history = history;
             }
             this.showHistory = true;
         },
