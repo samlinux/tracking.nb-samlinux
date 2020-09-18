@@ -1,0 +1,27 @@
+.response {
+  margin-top: 10px;
+  font-weight: bold;
+  text-align: center;
+  &.response-success {
+    color: rgb(139, 195, 74);
+  }
+  &.response-error {
+    color: red;
+  }
+}
+.rq-spinner-container {
+  float: right;
+  height: 36px;
+}
+.md-autocomplete {
+  &.has-error {
+    &::after {
+      background-color: red;
+    }
+  }
+  .md-helper-text {
+    &.has-error {
+      color: red;
+    }
+  }
+}

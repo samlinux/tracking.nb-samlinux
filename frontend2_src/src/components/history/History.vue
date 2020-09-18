@@ -11,13 +11,13 @@
               <label for="pId">Package ID</label>
               <md-field>
                 <md-input v-on:keydown.enter.prevent="refresh" name="pId" id="pId" v-model="pId" />
-                <md-button
+                <!-- <md-button
                   class="md-icon-button"
                   style="margin: 0;"
                   @click="showQrScanner = !showQrScanner;"
                 >
                   <md-icon>qr_code_scanner</md-icon>
-                </md-button>
+                </md-button>-->
               </md-field>
               <md-card-actions>
                 <md-button type="button" v-on:click="refresh" class="md-primary md-raised">check</md-button>

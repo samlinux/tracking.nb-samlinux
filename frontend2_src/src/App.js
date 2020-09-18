@@ -7,6 +7,10 @@ export default {
             history: {
                 moduleName: "Package History",
                 modulePath: "/history",
+            },
+            store: {
+                moduleName: "Store",
+                modulePath: "/store",
             }
         },
     }),

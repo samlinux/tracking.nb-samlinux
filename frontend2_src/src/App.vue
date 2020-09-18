@@ -11,6 +11,10 @@
               <md-icon>local_shipping</md-icon>
               <span class="md-list-item-text">{{ menuModules.history.moduleName }}</span>
             </md-list-item>
+            <md-list-item class="sidebar-menu-item" @click="navTo('store')">
+              <md-icon>move_to_inbox</md-icon>
+              <span class="md-list-item-text">{{ menuModules.store.moduleName }}</span>
+            </md-list-item>
           </md-list>
         </md-app-drawer>
         <md-app-toolbar class="md-primary">
