@@ -16,7 +16,7 @@ const bunyan = require("bunyan");
 const log = bunyan.createLogger({ name: 'scan-simulation-logging' });
 
 // We include our config file.
-const config = require('./.scanSimulationConfig.json');
+const config = require('../.config.json');
 
 startSimulation();
 
@@ -40,7 +40,7 @@ async function startSimulation() {
     // MongoDB - establish connection
     const dbConn = await getMongoDbConn();
     // dbConn - set collection
-    const collection = encodeURIComponent(_.get(config, 'dbCollection', 'colTracking2Test'));
+    const collection = encodeURIComponent(_.get(config, 'scanSimulation.dbCollection', 'colTracking2Test'));
     const dbCol = dbConn.collection(collection);
     // Start Agenda Interval
     const agenda = new Agenda({ mongo: dbConn });
@@ -51,16 +51,15 @@ async function startSimulation() {
         // console.log('next rfid: ' + currentRfid);
         currentRfid = insertTransitStationsForRfid(dbCol, rfidPrefix, currentRfid, rfidSteps);
     });
-    // console.log('do agenda job every ' + (_.get(config, 'agendaInterval', '10 minutes')) + '...');
+    // console.log('do agenda job every ' + (_.get(config, 'scanSimulation.scanInterval', '10 minutes')) + '...');
     (async function () {
         await agenda.start();
         // 5 seconds are the lowest number, because of the locktime
-        await agenda.every((_.get(config, 'agendaInterval', '10 minutes')), 'simulate scan');
+        await agenda.every((_.get(config, 'scanSimulation.scanInterval', '10 minutes')), 'simulate scan');
     })();
 }
 
 function insertTransitStationsForRfid(dbCol, prefix, current, steps) {
-    const insertDocs = [];
     const startNumber = current;
     const endNumber = current + steps;
     /**
@@ -81,24 +80,26 @@ function insertTransitStationsForRfid(dbCol, prefix, current, steps) {
     const scannedStart = new Date();
     scannedStart.setHours(scannedStart.getHours() - identities.length);
     // Start generating insert-documents
+    const scanned = scannedStart;
+    log.info('new scan simulation');
     identities.forEach(identity => {
+        const insertDocs = [];
         for (let i = startNumber; i < endNumber; i++) {
-            const scanned = scannedStart;
             insertDocs.push({
-                rfId: (prefix + i.toString()),
+                rfid: (prefix + i.toString()),
                 identity: identity,
                 scanned: scanned.toISOString()
             });
-            scanned.setHours(scanned.getHours() + 1);
+        }
+        scanned.setHours(scanned.getHours() + 1);
+        if (insertDocs.length > 0) {
+            dbCol.insertMany(insertDocs).then(result => {
+                log.info('Successfully inserted ' + insertDocs.length + ' scans in identity: ' + identity);
+            }).catch(err => {
+                throw new Error(err);
+            });
         }
     });
-    if (insertDocs.length > 0) {
-        dbCol.insertMany(insertDocs).then(result => {
-            console.log('Successfully inserted ' + insertDocs.length + ' documents!');
-        }).catch(err => {
-            throw new Error(err);
-        });
-    }
     return endNumber;
 }
 
@@ -106,9 +107,9 @@ function getMongoDbConn() {
     let dbref;
     const deferred = q.defer();
     const authMechanism = 'DEFAULT';
-    const user = encodeURIComponent(_.get(config, 'dbUser'));
-    const password = encodeURIComponent(_.get(config, 'dbPw'));
-    const authDb = encodeURIComponent(_.get(config, 'dbName'));
+    const user = encodeURIComponent(_.get(config, 'db1.user'));
+    const password = encodeURIComponent(_.get(config, 'db1.pw'));
+    const authDb = encodeURIComponent(_.get(config, 'db1.dbName'));
     const url = `mongodb://${user}:${password}@localhost:27017/?authMechanism=${authMechanism}&authSource=${authDb}`;
     const client = new MongoClient(url, { useNewUrlParser: true, useUnifiedTopology: true });
     client.connect(function (err) {

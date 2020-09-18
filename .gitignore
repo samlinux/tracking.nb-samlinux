@@ -8,4 +8,3 @@ app/.config.json
 app2/node_modules
 app2/.wallet
 app2/.config.json
-app2/cli/.scanSimulationConfig.json
