@@ -81,17 +81,17 @@ function insertTransitStationsForRfid(dbCol, prefix, current, steps) {
     const scannedStart = new Date();
     scannedStart.setHours(scannedStart.getHours() - identities.length);
     // Start generating insert-documents
-    for (let i = startNumber; i < endNumber; i++) {
-        const scanned = scannedStart;
-        identities.forEach(identity => {
+    identities.forEach(identity => {
+        for (let i = startNumber; i < endNumber; i++) {
+            const scanned = scannedStart;
             insertDocs.push({
                 rfId: (prefix + i.toString()),
                 identity: identity,
                 scanned: scanned.toISOString()
             });
             scanned.setHours(scanned.getHours() + 1);
-        });
-    }
+        }
+    });
     if (insertDocs.length > 0) {
         dbCol.insertMany(insertDocs).then(result => {
             console.log('Successfully inserted ' + insertDocs.length + ' documents!');

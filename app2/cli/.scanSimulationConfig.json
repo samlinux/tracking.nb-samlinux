@@ -1,7 +1,0 @@
-{
-    "dbName": "app2",
-    "dbUser": "app2User",
-    "dbPw": "toor",
-    "dbCollection": "colTracking2Test",
-    "agendaInterval": "30 seconds"
-}
