@@ -82,7 +82,7 @@ function insertTransitStationsForRfid(dbCol, prefix, current, steps) {
     // Start generating insert-documents
     const scanned = scannedStart;
     log.info('new scan simulation');
-    identities.forEach(identity => {
+    /* identities.forEach(identity => {
         const insertDocs = [];
         for (let i = startNumber; i < endNumber; i++) {
             insertDocs.push({
@@ -99,7 +99,22 @@ function insertTransitStationsForRfid(dbCol, prefix, current, steps) {
                 throw new Error(err);
             });
         }
-    });
+    }); */
+    const insertDocs = [];
+    for (let i = startNumber; i < endNumber; i++) {
+        insertDocs.push({
+            rfid: (prefix + i.toString()),
+            scanned: scanned.toISOString()
+        });
+    }
+    scanned.setHours(scanned.getHours() + 1);
+    if (insertDocs.length > 0) {
+        dbCol.insertMany(insertDocs).then(result => {
+            log.info('Successfully inserted ' + insertDocs.length + ' documents! ');
+        }).catch(err => {
+            throw new Error(err);
+        });
+    }
     return endNumber;
 }
 
