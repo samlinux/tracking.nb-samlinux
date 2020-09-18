@@ -79,15 +79,15 @@ export default {
                             p.delivered = true;
                             this.packageDelivered = true;
                         }
-                        if (!this.firstDestination) {
-                            this.firstDestination = p;
-                        }
-                        this.lastDestination = p;
                         history.push(p);
                     });
-                    history.sort(function (a, b) {
-                        return b.sort - a.sort;
-                    });
+                    if (history.length > 0) {
+                        history.sort(function (a, b) {
+                            return b.sort - a.sort;
+                        });
+                        this.firstDestination = history[(history.length - 1)];
+                        this.lastDestination = history[0];
+                    }
                 }
                 this.history = history;
             }
