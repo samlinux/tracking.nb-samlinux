@@ -11,7 +11,8 @@ export default {
             'loaded_in_trolley', 'aircraft_bay', 'loaded_into_aircraft', 'aircraft_takeoff'
         ],
         owner: "",
-        pId: "",
+        rfid: "",
+        pId: null,
         response: null,
         formError: null,
         msgTimeout: null,
@@ -39,6 +40,9 @@ export default {
             return itemLabel;
         },
         getRfidSet: function (searchTerm) {
+            if (!searchTerm || searchTerm !== "") {
+                this.rfid = "";
+            }
             this.rfidSet = new Promise(resolve => {
                 resolve(this.fetchFoundRfidData(searchTerm));
             });
@@ -56,17 +60,18 @@ export default {
             };
             const ApiResponse = await fetch(API_LOCATION + "search", requestOptions);
             const responseData = await ApiResponse.json();
-            // this.response = "Package history successfully updated: " + responseData.txId;
-            console.log(responseData);
+            if (responseData) {
+                if (responseData.key) {
+                    data.push(responseData.key);
+                }
+            }
             return data;
         },
         store: async function () {
             if (this.transactionInProgress) return;
             let rfid;
-            if (this.pId) {
-                if (this.pId.rfid) {
-                    rfid = this.pId.rfid;
-                }
+            if (this.rfid && this.rfid !== "") {
+                rfid = this.rfid;
             }
             this.response = null;
             this.formError = null;
@@ -97,6 +102,11 @@ export default {
                 // Form-Error
                 this.formError = "Package ID and Owner Identity must be set!";
                 this.checkFormValidity = true;
+            }
+        },
+        onRfidSelected(event) {
+            if (event && event !== '') {
+                this.rfid = event;
             }
         }
     },

@@ -9,31 +9,31 @@
           <md-card-content>
             <div>
               <md-autocomplete
-                placeholder="Package ID"
+                placeholder="Package RFID"
                 v-on:keydown.enter.prevent="refresh"
                 v-model="pId"
                 :md-options="rfidSet"
                 @md-changed="getRfidSet"
-                @md-opened="getRfidSet"
+                @md-selected="onRfidSelected"
                 required
                 :disabled="transactionInProgress"
-                v-bind:class="{'has-error': formError && !pId.rfid}"
+                v-bind:class="{'has-error': formError && !(rfid && rfid !== '')}"
               >
-                <label>Package ID</label>
-                <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item.rfid }}</template>
+                <label>Package RFID</label>
+                <template slot="md-autocomplete-item" slot-scope="{ item }">{{ item }}</template>
                 <template slot="md-autocomplete-empty" slot-scope="{ term }">
-                  <span>No package with ID matching "{{ term }}" was found.</span>
+                  <span>No package with RFID matching "{{ term }}" was found.</span>
                 </template>
-                <div v-if="pId.rfid" class="md-helper-text">
-                  <strong>Selected ID:</strong>
-                  <span class="package-id-selected">{{ pId.rfid }}</span>
+                <div v-if="rfid && rfid !== ''" class="md-helper-text">
+                  <strong>Selected RFID:</strong>
+                  <span class="package-id-selected">{{ rfid }}</span>
                 </div>
                 <div
                   v-else
                   class="md-helper-text"
-                  v-bind:class="{'has-error': formError && !pId.rfid}"
+                  v-bind:class="{'has-error': formError && (!rfid || rfid !== '')}"
                 >
-                  <strong>Please select an existing Package ID.</strong>
+                  <strong>Please select an existing Package RFID.</strong>
                 </div>
               </md-autocomplete>
             </div>
