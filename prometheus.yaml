@@ -2,11 +2,12 @@ global:
   scrape_interval: 15s
   evaluation_interval: 15s
 scrape_configs:
-  - job_name: ‘prometheus’
+  - job_name: 'prometheus'
     scrape_interval: 10s
     static_configs:
-    - targets: [‘localhost:9090’]
-  - job_name: ‘hyperledger_metrics’
+    - targets: ['localhost:9090']
+  - job_name: 'hyperledger_metrics'
     scrape_interval: 10s
     static_configs:
       - targets: ['peer0.tracking.nb-samlinux.com:9443','peer1.tracking.nb-samlinux.com:10443','orderer.nb-samlinux.com:8443','orderer2.nb-samlinux.com:8444','orderer3.nb-samlinux.com:8445']
+      #- targets: ['peer0.tracking.nb-samlinux.com:9443','peer1.tracking.nb-samlinux.com:10443']

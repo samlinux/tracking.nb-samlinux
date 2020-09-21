@@ -12,14 +12,14 @@ Open terminal 2.
 docker exec -it chaincode bash
 cd tracking
 go build
-CORE_PEER_ADDRESS=peer:7052 CORE_CHAINCODE_ID_NAME=mycc:0 ./tracking
+CORE_PEER_ADDRESS=peer:7052 CORE_CHAINCODE_ID_NAME=mycc:0 ./tracking2_1
 ```
 
 Open terminal 3.
 ```bash
 docker exec -it cli bash
 cd /opt/gopath/src
-peer chaincode install -p chaincodedev/chaincode/tracking -n mycc -v 0
+peer chaincode install -p chaincodedev/chaincode/tracking2_1 -n mycc -v 0
 peer chaincode instantiate -n mycc -v 0 -c '{"Args":[]}' -C myc
 
 peer chaincode invoke -n mycc -c '{"Args":["set", "2"]}' -C myc
@@ -217,9 +217,14 @@ root@fabric02:~/fabric/tracking.nb-samlinux/app2# tree .wallet/
 7. loaded_into_aircraft - Loaded into aircraft
 8. aircraft_takeoff - Aircarft takeoff
 
-
-
 ## Bunyan logs app2
 ```bash
 pm2 logs --raw | /root/fabric/tracking.nb-samlinux/app2/node_modules/bunyan/bin/bunyan -o short
+```
+
+## Start scann simulation
+```bash
+cd cli
+node scanSimulation.js [ProcessPreifx] [startNumber] [stepPerInterval] | | ../node_modules/bunyan/bin/bunyan
+
 ```
