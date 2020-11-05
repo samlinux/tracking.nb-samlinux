@@ -9,12 +9,12 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/history',
+      path: '/app2/history',
       name: 'history',
       component: History,
     },
     {
-      path: '/store',
+      path: '/app2/store',
       name: 'store',
       component: Store,
     },

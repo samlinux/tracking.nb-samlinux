@@ -6,11 +6,11 @@ export default {
         menuModules: {
             history: {
                 moduleName: "Package History",
-                modulePath: "/history",
+                modulePath: "/app2/history",
             },
             store: {
                 moduleName: "Store",
-                modulePath: "/store",
+                modulePath: "/app2/store",
             }
         },
     }),
