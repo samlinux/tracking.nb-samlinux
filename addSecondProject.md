@@ -110,3 +110,31 @@ modify .config.json
 cd cli 
 node addToWallet.js
 ```
+
+## Upgrade chaincode process
+
+```bash
+# Execute the cli container
+docker exec -it cli bash
+
+# these variables depends on the peer
+export CHANNEL_NAME=tracking2 
+export CORE_PEER_MSPCONFIGPATH=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/peerOrganizations/tracking.nb-samlinux.com/users/Admin@tracking.nb-samlinux.com/msp
+export TLS_ORDERER_CA=/opt/gopath/src/github.com/hyperledger/fabric/peer/crypto/ordererOrganizations/nb-samlinux.com/tlsca/tlsca.nb-samlinux.com-cert.pem
+
+peer chaincode install -n tracking2 -v 2.0 -p github.com/chaincode/tracking2-1
+
+peer chaincode upgrade  -o orderer.nb-samlinux.com:7050 --tls --cafile $TLS_ORDERER_CA -C $CHANNEL_NAME -n tracking2 -v 2.0 -c '{"Args":[""]}'
+
+# switch to peer1 and install the new chaincode
+export CORE_PEER_ADDRESS="peer1.tracking.nb-samlinux.com:8051"
+peer chaincode install -n tracking2 -v 2.0 -p github.com/chaincode/tracking2-1
+
+peer chaincode query -n tracking2 -c '{"Args":["history","1"]}' -C $CHANNEL_NAME | jq '.'
+peer chaincode query -n tracking2 -c '{"Args":["queryByKey","1"]}' -C $CHANNEL_NAME | jq '.'
+
+# switch to peer0 and test again
+export CORE_PEER_ADDRESS="peer0.tracking.nb-samlinux.com:7051"
+
+```
+

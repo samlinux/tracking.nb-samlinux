@@ -36,7 +36,7 @@ async function doTest2(maxInt){
 
 describe("tracking.nb.samlinux.com API tests - app2", function() {
   it("checks if api is running", async function() {
-    //this.skip();
+    this.skip();
     let result = await api.get('/')
     console.log(result.body)
   }) 
@@ -63,8 +63,6 @@ describe("tracking.nb.samlinux.com API tests - app2", function() {
     // 20 ms = 50 tps
     // 30 ms = 33 tps
     //setInterval(doTest1, 30, 10);
-    
-   
     /*
     tx.forEach(tx => {
        console.log(util.format('TxId: %s',tx.TxId)) 
@@ -73,12 +71,42 @@ describe("tracking.nb.samlinux.com API tests - app2", function() {
   })
 
   it("get getHistorySingle", async function() {
-    //this.skip();
-    let key = '4' ;
+    this.skip();
+    let key = '1000' ;
     let result = await api.get('/getHistory/'+key)
 
     let tx = JSON.parse(result.body.value);
     console.log(util.inspect(tx,false, null, true));
+  })
+
+  it("update an asset", async function() {
+    this.skip();
+    let actor = 'truck';
+    let key = '4';
+    let payload = { 
+      data: {
+        key: key,
+        actor: actor
+      }
+    }
+
+    let result = await api.post('/store').send(payload)
+    //let tx = JSON.parse(result.body);
+    //console.log(util.inspect(tx,false, null, true));
+    console.log(result.body);
+  })
+
+  it("get getAsset", async function() {
+    //this.skip();
+    let key = '1000' ;
+    let payload = { 
+      data: {
+        key: key
+      }
+    }
+
+    let result = await api.post('/search').send(payload)
+    console.log(result.body);
   })
 
 })

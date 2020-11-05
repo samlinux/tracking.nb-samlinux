@@ -19,6 +19,8 @@
 
   // we include our API endpoint code.
   let getHistory = require('./index-getHistory');
+  let getAssetById = require('./index-getAssetById');
+  let store = require('./index-store');
   let importData = require('./importData').ImportData;
 
   // We include our connection modul.
@@ -66,16 +68,22 @@
     
     // We store a new or update an existing asset
     // @postParam {json object} {data:{key:'', actor:''}}
-    /*
     app.post('/store', async function (req, res) {
-      let result = await store(req, connectionPool, helper)
+      let result = await store(req, connectionPool, helper, log)
       res.json(result);
     })
-    */
+
     // We want all versions of an asset
     // @apiParam {json object} key 
     app.get('/getHistory/:key', async function (req, res) {
       let result = await getHistory(req, connectionPool, helper, log)
+      res.json(result);
+    })
+
+    // Get an asset by ID
+    // @postParam {json object} {data:{key:''}}
+    app.post('/search', async function (req, res) {
+      let result = await getAssetById(req, connectionPool, helper, log)
       res.json(result);
     })
 
