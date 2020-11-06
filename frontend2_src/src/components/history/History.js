@@ -81,10 +81,27 @@ export default {
                         }
                         history.push(p);
                     });
+                    history.sort(function (a, b) {
+                        let aTime = 0;
+                        let bTime = 0;
+                        if (a) {
+                            if (a.sort) {
+                                if (a.sort.getTime()) {
+                                    aTime = a.sort.getTime();
+                                }
+                            }
+                        }
+                        if (b) {
+                            if (b.sort) {
+                                if (b.sort.getTime()) {
+                                    bTime = b.sort.getTime();
+                                }
+                            }
+                        }
+                        // DESC - daher "b minus a"
+                        return bTime - aTime;
+                    });
                     if (history.length > 0) {
-                        history.sort(function (a, b) {
-                            return b.sort - a.sort;
-                        });
                         this.firstDestination = history[(history.length - 1)];
                         this.lastDestination = history[0];
                     }
