@@ -56,7 +56,6 @@ export default {
                         let p = {};
                         let date = "date not obtained";
                         let time = "time not obtained";
-                        let sortDate = '';
                         p.txId = element.TxId;
                         p.owner = element.Packet.owner;
                         p.ts = element.Packet.scanned;
@@ -71,35 +70,11 @@ export default {
                         }
                         p.date = date;
                         p.time = time;
-                        // sortDate generieren
-                        const sortDateSplit = date.split(".");
-                        sortDate += sortDateSplit[2] + "-" + sortDateSplit[1] + "-" + sortDateSplit[0];
-                        p.sort = new Date(sortDate + " " + time);
                         if (p.owner === "aircraft_takeoff") {
                             p.delivered = true;
                             this.packageDelivered = true;
                         }
                         history.push(p);
-                    });
-                    history.sort(function (a, b) {
-                        let aTime = 0;
-                        let bTime = 0;
-                        if (a) {
-                            if (a.sort) {
-                                if (a.sort.getTime()) {
-                                    aTime = a.sort.getTime();
-                                }
-                            }
-                        }
-                        if (b) {
-                            if (b.sort) {
-                                if (b.sort.getTime()) {
-                                    bTime = b.sort.getTime();
-                                }
-                            }
-                        }
-                        // DESC - daher "b minus a"
-                        return bTime - aTime;
                     });
                     if (history.length > 0) {
                         this.firstDestination = history[(history.length - 1)];
