@@ -13,19 +13,51 @@
     }
     .md-app {
       min-height: calc(100vh - 33px);
-      .md-title {
-        font-size: 19px;
+      .md-app-toolbar {
+        position: relative;
+        background-color: white;
+        border-bottom: 1px solid #d0d0d0;
+        box-sizing: border-box;
+        .app-menu-button {
+          position: absolute;
+          right: 0;
+          padding-right: 16px;
+          background-color: white;
+          .md-icon {
+            color: rgba(0, 0, 0, 0.87);
+          }
+        }
+        .md-title {
+          margin-left: 0;
+          color: rgba(0, 0, 0, 0.87);
+          .app-logo {
+            cursor: default;
+            user-select: none;
+            img {
+              height: 66px;
+              margin: 5px auto;
+              margin-right: 10px;
+              cursor: pointer;
+            }
+            .app-logo-text {
+              font-size: .9em;
+            }
+          }
+        }
       }
       .md-app-content {
         border-right: 0 !important;
       }
       .md-content {
         padding: 16px;
-        background: #fafafa;
+        background: #b5121b;
       }
       .md-drawer {
         width: 230px !important;
         max-width: calc(100vw - 125px) !important;
+        .md-drawer-header {
+          font-size: 1.2em;
+        }
       }
     }
   }
@@ -36,7 +68,7 @@
     background: white;
     border-top: 1px solid #d0d0d0;
     .footer-link {
-      color: #2196f3 !important;
+      color: #e9943f !important;
       text-decoration: none;
       cursor: pointer;
       &:hover {
@@ -46,12 +78,21 @@
   }
 }
 
-@media screen and (max-device-width: 330px), screen and (max-width: 330px) {
+@media screen and (max-device-width: 812px), screen and (max-width: 812px) {
   .App {
     .app-container {
       .md-app {
-        .md-title {
-          max-width: 230px;
+        .md-app-toolbar {
+          .md-title {
+            .app-logo {
+              .app-logo-text {
+                font-size: .7em;
+              }
+              img {
+                height: 45px;
+              }
+            }
+          }
         }
       }
     }

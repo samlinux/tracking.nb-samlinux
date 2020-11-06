@@ -3,10 +3,10 @@
   font-weight: bold;
   text-align: center;
   &.response-success {
-    color: rgb(139, 195, 74);
+    color: #b5121b;
   }
   &.response-error {
-    color: red;
+    color: #e9943f;
   }
 }
 .rq-spinner-container {
@@ -16,12 +16,12 @@
 .md-autocomplete {
   &.has-error {
     &::after {
-      background-color: red;
+      background-color: #e9943f;
     }
   }
   .md-helper-text {
     &.has-error {
-      color: red;
+      color: #e9943f;
     }
   }
 }

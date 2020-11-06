@@ -10,7 +10,7 @@
       color: #9a9a9a;
       &.success {
         top: 18px;
-        color: rgb(139, 195, 74);
+        color: #b5121b;
       }
       i {
         font-size: 25px;
@@ -25,7 +25,7 @@
         white-space: nowrap;
         &.success {
           .history-progress-bar-element {
-            background: rgb(139, 195, 74) !important;
+            background: #b5121b !important;
           }
         }
         .history-progress-bar-element {
@@ -37,7 +37,7 @@
           background: #d2d2d2;
           &:first-child {
             margin-right: 3px;
-            background: #ffca28;
+            background: #e9943f;
           }
         }
       }
@@ -80,7 +80,13 @@
       position: relative;
       padding: 11px 5px 8px 60px;
       border-bottom: 1px solid #d2d2d2;
-
+      .timeline-img-container {
+        text-align: right;
+        img {
+          height: 90px;
+          margin-bottom: 10px;
+        }
+      }
       .timeline-content-date {
         margin-bottom: 10px;
         font-weight: bold;
@@ -92,7 +98,7 @@
         overflow: hidden;
         text-overflow: ellipsis;
         &.success {
-          // color: rgb(139, 195, 74);
+          // color: #b5121b;
         }
       }
     }
@@ -112,12 +118,28 @@
   cursor: default;
 
   &.success {
-    background: rgb(139, 195, 74);
+    background: #b5121b;
     color: white;
   }
 
   i {
     font-size: 25px;
     line-height: 40px;
+  }
+}
+
+@media screen and (max-device-width: 600px), screen and (max-width: 600px) {
+  .timeline {
+    .timeline-event {
+      .timeline-content {
+        .timeline-img-container {
+          text-align: left;
+          img {
+            height: 75px;
+            margin-top: 10px;
+          }
+        }
+      }
+    }
   }
 }
