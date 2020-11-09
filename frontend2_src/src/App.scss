@@ -50,7 +50,11 @@
       }
       .md-content {
         padding: 16px;
-        background: #b5121b;
+        // background: #b5121b;
+        background-color: white;
+        background-image: url("./assets/images/background.png");
+        background-repeat: repeat;
+        background-size: 813px;
       }
       .md-drawer {
         width: 230px !important;
@@ -68,7 +72,7 @@
     background: white;
     border-top: 1px solid #d0d0d0;
     .footer-link {
-      color: #e9943f !important;
+      color: #b5121b !important;
       text-decoration: none;
       cursor: pointer;
       &:hover {
@@ -82,6 +86,9 @@
   .App {
     .app-container {
       .md-app {
+        .md-content {
+          background-size: 100%;
+        }
         .md-app-toolbar {
           .md-title {
             .app-logo {
@@ -93,6 +100,18 @@
               }
             }
           }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-device-width: 500px), screen and (max-width: 500px) {
+  .App {
+    .app-container {
+      .md-app {
+        .md-content {
+          background-size: 150%;
         }
       }
     }
