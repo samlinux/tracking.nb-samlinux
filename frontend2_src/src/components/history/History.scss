@@ -84,15 +84,15 @@
         text-align: right;
         .image-icon {
           display: inline-block;
-          width: 80px;
-          height: 80px;
+          width: 60px;
+          height: 60px;
           margin-bottom: 10px;
           background-color: white;
           background-repeat: no-repeat;
           background-size: contain;
           &.freight_forwarder_warehouse {
             background-image: url('../../assets/images/icons/freight_forwarder_warehouse.png');
-            height: 140px;
+            height: 100px;
           }
           &.truck {
             background-image: url('../../assets/images/icons/truck.png');
@@ -105,11 +105,11 @@
           }
           &.loaded_in_trolley {
             background-image: url('../../assets/images/icons/loaded_in_trolley.png');
-            height: 140px;
+            height: 100px;
           }
           &.aircraft_bay {
             background-image: url('../../assets/images/icons/aircraft_bay.png');
-            width: 90px;
+            width: 70px;
           }
           &.loaded_into_aircraft {
             background-image: url('../../assets/images/icons/loaded_into_aircraft.png');
@@ -169,20 +169,18 @@
         .timeline-img-container {
           text-align: left;
           .image-icon {
-            width: 65px;
-            height: 65px;
             margin-top: 10px;
             &.freight_forwarder_warehouse {
               background-image: url('../../assets/images/icons/freight_forwarder_warehouse.png');
-              height: 110px;
+              height: 90px;
             }
             &.loaded_in_trolley {
               background-image: url('../../assets/images/icons/loaded_in_trolley.png');
-              height: 110px;
+              height: 90px;
             }
             &.aircraft_bay {
               background-image: url('../../assets/images/icons/aircraft_bay.png');
-              width: 75px;
+              width: 65px;
             }
           }
         }

@@ -103,8 +103,8 @@
                           <span
                             v-if="item.owner === 'freight_forwarder_warehouse'"
                           >
-                            Shipments are pick from freights forwarders and
-                            apply printed cargo labels
+                            Shipments are picked up by freight forwarders and
+                            printed cargo labels are applied
                           </span>
                           <span v-if="item.owner === 'truck'">
                             Shipments are handed over to ground handling agents
@@ -120,13 +120,13 @@
                             freights acceptance
                           </span>
                           <span v-if="item.owner === 'aircraft_bay'">
-                            Shipments are verified for weight, security
+                            Shipments are verified for weight and security
                           </span>
                           <span v-if="item.owner === 'loaded_into_aircraft'">
                             Shipments are loaded into aircraft container
                           </span>
                           <span v-if="item.owner === 'aircraft_takeoff'">
-                            Depart for destination
+                            Depart to destination
                           </span>
                         </div>
                       </div>
