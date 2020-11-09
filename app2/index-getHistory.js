@@ -24,9 +24,12 @@ module.exports = async function (req, connectionPool, helper, log) {
     // Construct the finale return object.
     let tmp = JSON.parse(result.toString());
 
+    // Sorting scanned desc
+    tmp = _.orderBy(tmp,['Packet.scanned'], ['desc']);
     _.forEach(tmp, (v,k) => {
       tmp[k].Packet.scanned = moment(new Date(v.Packet.scanned)).format("DD.MM.YYYY HH:mm:ss");
     })
+
     tmp = JSON.stringify(tmp);
     
     let r = {
