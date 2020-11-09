@@ -3,10 +3,10 @@
   font-weight: bold;
   text-align: center;
   &.response-success {
-    color: #b5121b;
+    color: #0ba525;
   }
   &.response-error {
-    color: #e9943f;
+    color: red;
   }
 }
 .rq-spinner-container {

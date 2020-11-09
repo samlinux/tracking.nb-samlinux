@@ -34,7 +34,7 @@
               </md-card-actions>
               <div
                 v-if="showHistory && !packageExists"
-                style="text-align: center; color: #e9943f"
+                style="text-align: center; color: red; padding-top: 10px"
               >
                 <small>
                   <b

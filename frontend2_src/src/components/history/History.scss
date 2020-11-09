@@ -10,7 +10,7 @@
       color: #9a9a9a;
       &.success {
         top: 18px;
-        color: #b5121b;
+        color: #0ba525;
       }
       i {
         font-size: 25px;
@@ -25,7 +25,7 @@
         white-space: nowrap;
         &.success {
           .history-progress-bar-element {
-            background: #b5121b !important;
+            background: #0ba525 !important;
           }
         }
         .history-progress-bar-element {
@@ -37,7 +37,7 @@
           background: #d2d2d2;
           &:first-child {
             margin-right: 3px;
-            background: #e9943f;
+            background: #b5121b;
           }
         }
       }
@@ -97,9 +97,6 @@
         white-space: nowrap;
         overflow: hidden;
         text-overflow: ellipsis;
-        &.success {
-          // color: #b5121b;
-        }
       }
     }
   }
@@ -118,7 +115,7 @@
   cursor: default;
 
   &.success {
-    background: #b5121b;
+    background: #0ba525;
     color: white;
   }
 
