@@ -99,49 +99,79 @@
                         >
                           {{ item.owner }}
                         </div>
+                        <div class="timeline-content-desc">
+                          <span
+                            v-if="item.owner === 'freight_forwarder_warehouse'"
+                          >
+                            Shipments are pick from freights forwarders and
+                            apply printed cargo labels
+                          </span>
+                          <span v-if="item.owner === 'truck'">
+                            Shipments are handed over to ground handling agents
+                          </span>
+                          <span v-if="item.owner === 'export_docks'">
+                            Shipments are handed over to ground handling agents
+                          </span>
+                          <span v-if="item.owner === 'storage_location'">
+                            Items are collected at HQ
+                          </span>
+                          <span v-if="item.owner === 'loaded_in_trolley'">
+                            Shipments are lodge-in to SATS export dock for
+                            freights acceptance
+                          </span>
+                          <span v-if="item.owner === 'aircraft_bay'">
+                            Shipments are verified for weight, security
+                          </span>
+                          <span v-if="item.owner === 'loaded_into_aircraft'">
+                            Shipments are loaded into aircraft container
+                          </span>
+                          <span v-if="item.owner === 'aircraft_takeoff'">
+                            Depart for destination
+                          </span>
+                        </div>
                       </div>
                       <div class="md-layout-item md-xsmall-size-100">
                         <div class="timeline-img-container">
-                          <img
+                          <div
+                            class="image-icon freight_forwarder_warehouse"
                             v-if="item.owner === 'freight_forwarder_warehouse'"
-                            src="../../assets/images/icons/freight_forwarder_warehouse.png"
-                            alt="freight_forwarder_warehouse"
-                          />
-                          <img
+                            title="freight_forwarder_warehouse"
+                          ></div>
+                          <div
+                            class="image-icon truck"
                             v-if="item.owner === 'truck'"
-                            src="../../assets/images/icons/truck.png"
-                            alt="truck"
-                          />
-                          <img
+                            title="truck"
+                          ></div>
+                          <div
+                            class="image-icon export_docks"
                             v-if="item.owner === 'export_docks'"
-                            src="../../assets/images/icons/export_docks.png"
-                            alt="export_docks"
-                          />
-                          <img
+                            title="export_docks"
+                          ></div>
+                          <div
+                            class="image-icon storage_location"
                             v-if="item.owner === 'storage_location'"
-                            src="../../assets/images/icons/storage_location.png"
-                            alt="storage_location"
-                          />
-                          <img
+                            title="storage_location"
+                          ></div>
+                          <div
+                            class="image-icon loaded_in_trolley"
                             v-if="item.owner === 'loaded_in_trolley'"
-                            src="../../assets/images/icons/loaded_in_trolley.png"
-                            alt="loaded_in_trolley"
-                          />
-                          <img
+                            title="loaded_in_trolley"
+                          ></div>
+                          <div
+                            class="image-icon aircraft_bay"
                             v-if="item.owner === 'aircraft_bay'"
-                            src="../../assets/images/icons/aircraft_bay.png"
-                            alt="aircraft_bay"
-                          />
-                          <img
+                            title="aircraft_bay"
+                          ></div>
+                          <div
+                            class="image-icon loaded_into_aircraft"
                             v-if="item.owner === 'loaded_into_aircraft'"
-                            src="../../assets/images/icons/loaded_into_aircraft.png"
-                            alt="loaded_into_aircraft"
-                          />
-                          <img
+                            title="loaded_into_aircraft"
+                          ></div>
+                          <div
+                            class="image-icon aircraft_takeoff"
                             v-if="item.owner === 'aircraft_takeoff'"
-                            src="../../assets/images/icons/aircraft_takeoff.png"
-                            alt="aircraft_takeoff"
-                          />
+                            title="aircraft_takeoff"
+                          ></div>
                         </div>
                       </div>
                     </div>
