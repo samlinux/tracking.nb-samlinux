@@ -116,8 +116,8 @@
                             Items are collected at HQ
                           </span>
                           <span v-if="item.owner === 'loaded_in_trolley'">
-                            Shipments are lodge-in to SATS export dock for
-                            freights acceptance
+                            Shipments are lodge-in to export dock for freights
+                            acceptance
                           </span>
                           <span v-if="item.owner === 'aircraft_bay'">
                             Shipments are verified for weight and security

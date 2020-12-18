@@ -24,12 +24,12 @@
         <md-app-toolbar class="md-primary">
           <span class="md-title">
             <div class="app-logo">
-              <img
+              <!-- <img
                 @click="navTo('history')"
-                src="./assets/images/sats_logo.png"
-                alt="Airfreights Shipments SATS"
-                title="Airfreights Shipments SATS"
-              />
+                src="./assets/images/logo.png"
+                alt="nb-tracking"
+                title="nb-tracking"
+              /> -->
               <span class="app-logo-text">Airfreights Shipments</span>
             </div>
           </span>
