@@ -1,0 +1,25 @@
+{
+  "name": "croptracing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha -t 5000 tests/specs.js"
+  },
+  "dependencies": {
+    "bunyan": "^1.8.14",
+    "cors": "^2.8.5",
+    "express": "^4.17.1",
+    "fabric-ca-client": "1.4.11",
+    "fabric-network": "1.4.11",
+    "lodash": "^4.17.20",
+    "moment": "^2.27.0",
+    "mongodb": "^3.6.2"
+  },
+  "author": "rbole",
+  "license": "ISC",
+  "devDependencies": {
+    "mocha": "^8.1.1",
+    "supertest": "^4.0.2"
+  }
+}

@@ -226,5 +226,9 @@ pm2 logs --raw | /root/fabric/tracking.nb-samlinux/app2/node_modules/bunyan/bin/
 ```bash
 cd cli
 node scanSimulation.js [ProcessPreifx] [startNumber] [stepPerInterval] | | ../node_modules/bunyan/bin/bunyan
+```
 
+## Monitoring
+```bash
+docker stats --all --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}"
 ```

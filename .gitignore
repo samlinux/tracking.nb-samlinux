@@ -8,3 +8,7 @@ app/.config.json
 app2/node_modules
 app2/.wallet
 app2/.config.json
+app3/node_modules
+app3/.wallet
+app3/.config.json
+chaincode/croptracing/vendor/
