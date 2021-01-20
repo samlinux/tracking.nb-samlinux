@@ -6,10 +6,22 @@
 'use strict';
 const _ = require('lodash');
 
-module.exports = async function (req, connectionPool, helper, log) {
+module.exports = async function (req, connectionPool, helper, log, db) {
+
+  let col = db.collection('barcode');
 
   // Get the keys and value from the POST request.
-  let key = helper.getKey(_.get(req,'body.data',false))
+  let key = '';
+  if(_.has(req,'body.data.barcode')){
+    let barcode = _.get(req,'body.data.barcode','-1');
+    barcode = parseInt(barcode);
+    let search = {'barcode':barcode}
+   
+    let data = await col.find(search).next();
+    key = helper.getKey({key:_.get(data,'compositeKey','-1')})
+  } else {
+    key = helper.getKey(_.get(req,'body.data',false))
+  }
   
   let fpoName = _.get(key,'fpoName','');
   let cropName =_.get(key,'cropName','');

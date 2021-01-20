@@ -14,7 +14,8 @@
     "fabric-network": "1.4.11",
     "lodash": "^4.17.20",
     "moment": "^2.27.0",
-    "mongodb": "^3.6.2"
+    "mongodb": "^3.6.2",
+    "q": "^1.5.1"
   },
   "author": "rbole",
   "license": "ISC",

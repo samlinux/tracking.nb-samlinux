@@ -20,7 +20,7 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
     let cropName = 'Birne';
     let a = moment('2021-02-01').toISOString();
     let cropDate = a;
-    let cropId = '1'
+    let cropId = '10'
 
     let payload = { 
       data: {
@@ -113,7 +113,7 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
   }) 
 
   it("get full crop by fpo and crop", async function() {
-    //this.skip();
+    this.skip();
     let payload = { 
       data: {
         'fpoName': 'fpo2',
@@ -125,7 +125,7 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
     console.log(util.inspect(result.body,false, null, true));
   }) 
 
-  it("get full crop", async function() {
+  it("get full crop by key", async function() {
     this.skip();
     let key = 'fpo2~birne~2021~1';
     let payload = { 
@@ -136,5 +136,18 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
 
     let result = await api.post('/getCrop').send(payload)
     console.log(util.inspect(result.body,false, null, true));
-  }) 
+  })
+  
+  it("get full crop by barcode", async function() {
+    //this.skip();
+    let barcode = '1008';
+    let payload = { 
+      data: {
+        'barcode': barcode
+      }
+    }
+
+    let result = await api.post('/getCrop').send(payload)
+    console.log(util.inspect(result.body,false, null, true));
+  })
 })

@@ -6,8 +6,8 @@
 'use strict';
 const _ = require('lodash');
 
-module.exports = async function (req, connectionPool, helper, log) {
-
+module.exports = async function (req, connectionPool, helper, log, db) {
+  let col = db.collection('barcode');
   // Get the keys and value from the POST request.
   let fpoName = _.get(req,'body.data.fpoName','');
   let cropName = _.get(req,'body.data.cropName','');
@@ -34,15 +34,36 @@ module.exports = async function (req, connectionPool, helper, log) {
     result = result.toString();
     result = JSON.parse(result);
 
+    // store barcode for compositeKey
+    let newBarcode = await storeBarcode(result.Key, col);
+
     // Prepare the return value.
     let r = {
-      key: result.Key
+      key: result.Key,
+      barcode: newBarcode
     }
+   
     return r;
     }
   }
   catch(error){
-    let r = {r:'Failed to submit transaction: '+error};
+    let r = {error:error};
     return r;
   }
+}
+
+let storeBarcode = async function(key, col){
+  // get latest barcode and increment +1
+  let search = {};
+  let data = await col.find(search).sort({_id:-1}).limit(1).next();
+  let lastBarcode = _.get(data,'barcode',false);
+  let nextBarcode = lastBarcode + 1;
+
+  let insert = {
+    'barcode':nextBarcode,
+    'compositeKey': key
+  }
+  await col.insertOne(insert)
+
+  return nextBarcode;
 }
