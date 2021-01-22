@@ -192,6 +192,18 @@ https://nb-tracking.samlinux.com/grafana/login
 ```bash
 docker-compose -f docker-compose-monitor.yaml up -d
 ```
+
+## Block - Explorer 
+Hyperledger Block Explorer
+
+https://nb-tracking-exp.samlinux.com
+
+
+```bash
+docker-compose -f docker-compose-explorer.yaml up -d
+```
+
+
 ## Available identities app2
 
 ```bash
