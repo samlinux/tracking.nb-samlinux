@@ -1,0 +1,9 @@
+{
+	"network-configs": {
+		"nb-samlinux": {
+			"name": "nb-samlinux",
+			"profile": "./connection-profile/connectionProfilExplorer.json"
+		}
+	},
+	"license": "Apache-2.0"
+}

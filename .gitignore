@@ -12,3 +12,4 @@ app3/node_modules
 app3/.wallet
 app3/.config.json
 chaincode/croptracing/vendor/
+connection-profile/
