@@ -32,8 +32,22 @@ export default {
     created: async function () {
         // Date-Format
         this.$material.locale.dateFormat = 'dd/MM/yyyy';
-        // Testdaten laden
-        this.loadCrop('fpo2~birne~2021~1');
+    },
+    mounted() {
+        const routerData = this.$route.params;
+        if (routerData) {
+            if (routerData.cropData) {
+                const tmpKey = routerData.cropData.key,
+                    tmpSeedData = routerData.cropData.seedData;
+                delete routerData.cropData.key;
+                delete routerData.cropData.seedData;
+                if (tmpKey) {
+                    this.cropData = routerData.cropData;
+                    this.seedData = tmpSeedData ? tmpSeedData : {};
+                    this.cropKey = tmpKey;
+                }
+            }
+        }
     },
     methods: {
         loadCrop: async function (cropKey) {
@@ -62,14 +76,18 @@ export default {
                         inputs = [];
                     if (responseData.value.Farmer) {
                         responseData.value.Farmer.forEach((element) => {
-                            element.index = farmers.length;
-                            farmers.push(element);
+                            if (element.Name && element.Name !== '') {
+                                element.index = farmers.length;
+                                farmers.push(element);
+                            }
                         });
                     }
                     if (responseData.value.Inputs) {
                         responseData.value.Inputs.forEach((element) => {
-                            element.index = inputs.length;
-                            inputs.push(element);
+                            if (element.Name && element.Name !== '') {
+                                element.index = inputs.length;
+                                inputs.push(element);
+                            }
                         });
                     }
                     this.cropData.farmer = farmers;
@@ -162,10 +180,9 @@ export default {
                     body: JSON.stringify(payload),
                 };
                 const ApiResponse = await fetch(API_LOCATION + "setSeed", requestOptions);
-                const responseData = await ApiResponse.json();
+                await ApiResponse.json();
                 this.transactionInProgress = false;
                 this.seedResponse = "Seed data was set successfully.";
-                console.log(responseData);
                 this.msgTimeout = setTimeout(() => {
                     this.seedResponse = null;
                     this.cropData = {
@@ -246,7 +263,7 @@ export default {
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(payload),
                 };
-                const ApiResponse = await fetch(API_LOCATION + "addFarmer", requestOptions);
+                const ApiResponse = await fetch(API_LOCATION + "addInputs", requestOptions);
                 await ApiResponse.json();
                 this.dialogTransactionInProgress = false;
                 // set Farmer-Data into Farmers Array
@@ -311,6 +328,7 @@ export default {
             if (value) {
                 return moment(String(value)).format('DD/MM/YYYY')
             }
+            return '';
         }
     },
     computed: {
