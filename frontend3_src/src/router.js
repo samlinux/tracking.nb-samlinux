@@ -9,14 +9,14 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      // path: '/app3/history',
-      path: '/history',
+      path: '/app3/history',
+      // path: '/history',
       name: 'history',
       component: History,
     },
     {
-      // path: '/app3/store',
-      path: '/store',
+      path: '/app3/store',
+      // path: '/store',
       name: 'store',
       component: Store,
       props: true

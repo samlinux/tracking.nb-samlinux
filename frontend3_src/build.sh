@@ -5,13 +5,13 @@ set -e
 vue-cli-service build
 
 # clear ../frontend/
-rm -R ../frontend2
+rm -R ../frontend3
 
 # create frontend dir
-mkdir ../frontend2
+mkdir ../frontend3
 
 # copy files to ../frontend/
-cp -a dist/. ../frontend2/
+cp -a dist/. ../frontend3/
 
 # remove dist
 rm -R dist
