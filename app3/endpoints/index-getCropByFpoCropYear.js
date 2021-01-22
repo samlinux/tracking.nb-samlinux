@@ -31,7 +31,7 @@ module.exports = async function (req, connectionPool, helper, log) {
      Submit the specified transaction.
      Submit a transaction to the ledger. The transaction function name will be evaluated on the endorsing peers and then submitted to the ordering service for committing to the ledger. 
      */
-    let result = await contract.submitTransaction('getCropByFpoCropYear', fpoName, cropName, cropYear);
+    let result = await contract.evaluateTransaction('getCropByFpoCropYear', fpoName, cropName, cropYear);
 
     result = result.toString();
    
