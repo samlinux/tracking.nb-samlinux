@@ -1,0 +1,124 @@
+@import "variables";
+
+.App {
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  .app-container {
+    box-sizing: border-box;
+    border: 0;
+    background: white;
+    &::after {
+      content: "";
+      display: block;
+    }
+    .md-app {
+      min-height: calc(100vh - 33px);
+      .md-app-toolbar {
+        position: relative;
+        background-color: $primaryColor;
+        border-bottom: 1px solid #d0d0d0;
+        box-sizing: border-box;
+        .app-menu-button {
+          position: absolute;
+          right: 0;
+          padding-right: 16px;
+          background-color: $primaryColor;
+          .md-icon {
+            color: rgba(255, 255, 255, 1);
+          }
+        }
+        .md-title {
+          margin-left: 0;
+          color: rgba(255, 255, 255, 1);
+          .app-logo {
+            cursor: default;
+            user-select: none;
+            img {
+              height: 66px;
+              margin: 5px auto;
+              margin-right: 10px;
+              cursor: pointer;
+            }
+            .app-logo-text {
+              font-size: .9em;
+            }
+          }
+        }
+      }
+      .md-app-content {
+        max-width: 1280px;
+        margin: 0 auto;
+        border-left: 0 !important;
+        border-right: 0 !important;
+        background-color: #f5f5f5 !important;
+      }
+      .md-content {
+        padding: 16px;
+        // background: #b5121b;
+        background-color: white;
+        background-repeat: repeat;
+        background-size: 75%;
+      }
+      .md-drawer {
+        width: 230px !important;
+        max-width: calc(100vw - 125px) !important;
+        .md-drawer-header {
+          font-size: 1.2em;
+        }
+      }
+    }
+  }
+  .app-footer {
+    width: 100%;
+    max-height: 33px;
+    padding: 6px 10px 6px 10px;
+    background: #f5f5f5;
+    border-top: 1px solid #d0d0d0;
+    .footer-link {
+      color: #b5121b !important;
+      text-decoration: none;
+      cursor: pointer;
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+}
+
+@media screen and (max-device-width: 812px), screen and (max-width: 812px) {
+  .App {
+    .app-container {
+      .md-app {
+        .md-content {
+          background-size: 180%;
+        }
+        .md-app-toolbar {
+          .md-title {
+            .app-logo {
+              .app-logo-text {
+                font-size: .7em;
+              }
+              img {
+                height: 45px;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+@media screen and (max-device-width: 500px), screen and (max-width: 500px) {
+  .App {
+    .app-container {
+      .md-app {
+        .md-content {
+          background-size: 200%;
+        }
+      }
+    }
+  }
+}
