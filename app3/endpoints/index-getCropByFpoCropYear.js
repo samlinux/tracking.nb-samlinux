@@ -14,6 +14,8 @@ module.exports = async function (req, connectionPool, helper, log) {
 
   let cropName = _.get(req,'body.data.cropName','')
   cropName = cropName.toLowerCase();
+
+  let cropYear = _.get(req,'body.data.cropYear','')
   
   let identity = 'croptracing';
   let contract = helper.getContract(connectionPool, identity, log);
@@ -29,9 +31,10 @@ module.exports = async function (req, connectionPool, helper, log) {
      Submit the specified transaction.
      Submit a transaction to the ledger. The transaction function name will be evaluated on the endorsing peers and then submitted to the ordering service for committing to the ledger. 
      */
-    let result = await contract.submitTransaction('getCropByFpoCrop', fpoName, cropName);
+    let result = await contract.submitTransaction('getCropByFpoCropYear', fpoName, cropName, cropYear);
 
     result = result.toString();
+   
     result = JSON.parse(result);
 
     let r = {}

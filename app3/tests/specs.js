@@ -37,7 +37,7 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
   
   it("set seed", async function() {
     this.skip();
-    let key = 'fpo2~birne~2021~1';
+    let key = 'fpo2~birne~2021~10';
 
     let cropName2 = 'Birne Elster';
     let cropVarityName = 'G9'
@@ -79,7 +79,7 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
 
   it("add inputs", async function() {
     this.skip();
-    let key = 'fpo2~birne~2021~1';
+    let key = 'fpo2~birne~2021~10';
 
     let inputName = 'BTX 200'
     let inputType = 'Organic'
@@ -122,6 +122,20 @@ describe("tracking.nb.samlinux.com API tests - Crop Tracing", function() {
     }
 
     let result = await api.post('/getCropByFpoCrop').send(payload)
+    console.log(util.inspect(result.body,false, null, true));
+  }) 
+
+  it("get full crop by fpo and crop and year", async function() {
+    this.skip();
+    let payload = { 
+      data: {
+        'fpoName': 'fpo2',
+        'cropName': 'Birne',
+        'cropYear': '2021'
+      }
+    }
+
+    let result = await api.post('/getCropByFpoCropYear').send(payload)
     console.log(util.inspect(result.body,false, null, true));
   }) 
 

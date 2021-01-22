@@ -22,6 +22,7 @@
   let getCrop = require('./endpoints/index-getCrop');
   let getCropByFpo = require('./endpoints/index-getCropByFpo');
   let getCropByFpoCrop = require('./endpoints/index-getCropByFpoCrop');
+  let getCropByFpoCropYear = require('./endpoints/index-getCropByFpoCropYear');
 
   let createCrop = require('./endpoints/index-createCrop');
   let setSeed = require('./endpoints/index-setSeed');
@@ -90,6 +91,11 @@ connectToContract(config).then(function(connectionPool){
 
       app.post('/getCropByFpoCrop', async function (req, res) {
         let result = await getCropByFpoCrop(req, connectionPool, helper, log)
+        res.json(result);
+      })
+
+      app.post('/getCropByFpoCropYear', async function (req, res) {
+        let result = await getCropByFpoCropYear(req, connectionPool, helper, log)
         res.json(result);
       })
       
