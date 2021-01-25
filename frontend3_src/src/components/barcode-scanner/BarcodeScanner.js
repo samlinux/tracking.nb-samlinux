@@ -22,28 +22,22 @@ export default {
         open() {
             this.showDialog = true;
         },
-        closeDialog(scanSuccess) {
-            if (scanSuccess) {
-                this.$emit("barcodeScanned", this.scanResult);
+        closeDialog(scannedValue) {
+            if (scannedValue && !isNaN(parseInt(scannedValue))) {
+                this.$emit("barcodeScanned", parseInt(scannedValue));
             }
             this.showDialog = false;
         },
         onBarcodeDecode(data) {
-            console.log('detected', data);
-            /* let scanResult = "";
-            if (result && result !== "") {
-                if (result.indexOf("pid=") >= 0) {
-                    const resultSplit = result.split("pid=");
-                    if (resultSplit[1] && resultSplit[1] !== "") {
-                        scanResult = resultSplit[1];
+            if (data) {
+                if (data.codeResult) {
+                    if (data.codeResult.code) {
+                        if (!isNaN(parseInt(data.codeResult.code))) {
+                            this.closeDialog(data.codeResult.code);
+                        }
                     }
                 }
-                if (scanResult === "") {
-                    scanResult = result;
-                }
             }
-            this.scanResult = scanResult;
-            this.closeDialog(true); */
         }
     },
 };

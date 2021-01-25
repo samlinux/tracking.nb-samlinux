@@ -164,6 +164,9 @@ export default {
                     this.cropName = '';
                     this.cropDate = null;
                     this.cropId = '';
+                } else {
+                    // Form-Error
+                    this.formError = "A crop with the given has been created already!";
                 }
             } else {
                 // Form-Error

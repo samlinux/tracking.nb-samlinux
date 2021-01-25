@@ -31,14 +31,28 @@ export default {
         }
     },
     methods: {
-        onBarcodeDecode(result) {
-            /* if (result && result !== "") {
-                this.key = result;
-            } else {
-                this.key = "";
-            } */
-            console.log(result);
-            this.searchData();
+        onBarcodeDecode: async function (result) {
+            if (result && result > 0) {
+                const payload = {
+                    data: {
+                        barcode: result.toString()
+                    }
+                };
+                const requestOptions = {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload),
+                };
+                const ApiResponse = await fetch(API_LOCATION + "getCrop", requestOptions);
+                const responseData = await ApiResponse.json();
+                if (responseData) {
+                    if (responseData.key) {
+                        if (responseData.key !== "noKey") {
+                            this.openKeyDetail(responseData.key);
+                        }
+                    }
+                }
+            }
         },
         searchData: async function () {
             this.searchResult = [];

@@ -1,8 +1,8 @@
 .barcode-dialog-container {
   .barcode-scanner {
-    margin-top: 10px;
-    height: 480px;
-    max-height: 53vh;
+    .viewport video {
+      position: relative;
+    }
   }
 }
 @media only screen and (max-width: 600px) {

@@ -6,13 +6,13 @@ export default {
         menuModules: {
             history: {
                 moduleName: "Trace crop",
-                modulePath: "/app3/history",
-                // modulePath: "/history",
+                // modulePath: "/app3/history",
+                modulePath: "/history",
             },
             store: {
                 moduleName: "Create crop",
-                modulePath: "/app3/store",
-                // modulePath: "/store",
+                // modulePath: "/app3/store",
+                modulePath: "/store",
             }
         },
     }),
