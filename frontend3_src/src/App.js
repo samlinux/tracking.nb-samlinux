@@ -30,8 +30,14 @@ export default {
                 }
             }
         }
+
+        // Listen to Nav-Event
+        new createCustomEventTarget();
+
         // delete temp. search-data
         localStorage.removeItem('search-data');
+
+        // load start module
         if (this.$router.currentRoute) {
             this.navTo(startModuleName);
         }
@@ -39,15 +45,25 @@ export default {
     methods: {
         navTo: function (routeName) {
             if (this.menuModules[routeName]) {
-                this.setCurrentModuleName(this.menuModules[routeName].moduleName);
+                this.setCurrentModuleName(this.menuModules[routeName].moduleName, routeName);
                 this.$router
                     .push(this.menuModules[routeName].modulePath)
                     .catch(() => { });
                 this.menuVisible = false;
             }
         },
-        setCurrentModuleName(moduleName) {
+        setCurrentModuleName(moduleName, routeName) {
             this.currentModule = moduleName;
+            if (routeName === 'store') {
+                window.dispatchCustomEvent(new Event("navStore"));
+            }
         },
     },
 };
+
+const createCustomEventTarget = () => {
+    const target = document.createTextNode(null);
+    window.addCustomEventListener = target.addEventListener.bind(target);
+    window.removeCustomEventListener = target.removeEventListener.bind(target);
+    window.dispatchCustomEvent = target.dispatchEvent.bind(target);
+}

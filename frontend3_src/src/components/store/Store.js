@@ -26,6 +26,7 @@ export default {
         farmerFormError: null,
         inputFormError: null,
         msgTimeout: null,
+        eventTarget: false,
         checkFormValidity: false,
         transactionInProgress: false,
         dialogTransactionInProgress: false
@@ -57,6 +58,10 @@ export default {
         } else {
             this.backToSearch = true;
         }
+        window.addCustomEventListener("navStore", this.resetCropDetailData);
+    },
+    destroyed() {
+        window.removeCustomEventListener("navStore", this.resetCropDetailData);
     },
     methods: {
         loadCrop: async function (cropKey) {
@@ -301,11 +306,14 @@ export default {
                     name: "history"
                 });
             } else {
-                this.cropData = null;
-                this.seedData = null;
-                this.seedData = {};
-                this.cropKey = null;
+                this.resetCropDetailData();
             }
+        },
+        resetCropDetailData: function () {
+            this.cropData = null;
+            this.seedData = null;
+            this.seedData = {};
+            this.cropKey = null;
         },
         showCropImage: function (img, cropName) {
             let showImg = false,
