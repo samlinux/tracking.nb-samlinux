@@ -13,9 +13,9 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.1",
     "vue": "^2.6.11",
+    "vue-barcode-scanner": "^0.8.1",
     "vue-material": "1.0.0-beta-14",
     "vue-moment": "^4.1.0",
-    "vue-qrcode-reader": "^2.3.13",
     "vue-router": "^3.4.3"
   },
   "devDependencies": {

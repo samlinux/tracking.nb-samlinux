@@ -4,17 +4,12 @@
     :md-fullscreen="false"
     :md-active.sync="showDialog"
   >
-    <md-dialog-title>Scan QR package ID</md-dialog-title>
+    <md-dialog-title>Scan crop barcode</md-dialog-title>
     <md-dialog-content class="qr-dialog-container">
       <div
         class="barcode-scanner"
         v-bind:class="{ 'no-camera-available': scannerInitError }"
       >
-        <qrcode-stream
-          class="qr-code-stream"
-          @decode="onBarcodeDecode"
-          @init="onQrInit"
-        ></qrcode-stream>
         <div v-if="scannerInitError" class="qr-init-error">
           Error: {{ scannerInitError }}!
         </div>

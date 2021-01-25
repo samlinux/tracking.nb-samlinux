@@ -3,18 +3,16 @@ import VueMoment from 'vue-moment';
 import App from './App.vue';
 import router from './router';
 
+import VueBarcodeScanner from 'vue-barcode-scanner';
 import VueMaterial from 'vue-material';
 import 'vue-material/dist/vue-material.min.css';
 import './AppTheme.scss';
-
-import VueQrcodeReader from "vue-qrcode-reader";
 
 Vue.config.productionTip = false;
 
 Vue.use(VueMoment, {});
 Vue.use(VueMaterial);
-
-Vue.use(VueQrcodeReader);
+Vue.use(VueBarcodeScanner);
 
 import BarcodeScanner from "./components/barcode-scanner/BarcodeScanner.vue";
 Vue.component("BarcodeScanner", BarcodeScanner);
