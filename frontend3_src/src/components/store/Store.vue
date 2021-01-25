@@ -262,10 +262,10 @@
                     <md-icon>pest_control</md-icon>
                     <div class="md-list-item-text">
                       <span
-                        >{{ input.Name }}
-                        <span class="row-date-val">
+                        >{{ formatDate(input.InputDate) + " - " + input.Name }}
+                        <!-- <span class="row-date-val">
                           {{ formatDate(input.InputDate) }}
-                        </span>
+                        </span> -->
                       </span>
                       <span>{{ input.PurchasedFrom }}</span>
                       <span>{{ input.Type }}</span>
