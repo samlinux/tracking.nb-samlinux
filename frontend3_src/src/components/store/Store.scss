@@ -137,7 +137,7 @@
 .store-form-read-mode {
   .md-field {
     cursor: default;
-    pointer-events: none;
+    // pointer-events: none;
   }
   .store-seed-btn {
     visibility: hidden;
@@ -184,6 +184,22 @@
           width: 100px;
         }
       }
+    }
+  }
+}
+
+@media screen and (max-width: 960px) {
+  .store-form-read-mode {
+    .crop-detail-container {
+      .md-card-content {
+        height: auto !important;
+      }
+    }
+    .response-container {
+      display: none;
+    }
+    .store-seed-btn {
+      display: none;
     }
   }
 }

@@ -167,7 +167,7 @@
                       <label>Seed name</label>
                       <md-input
                         v-model="seedData.cropName2"
-                        :disabled="readMode"
+                        :readOnly="readMode"
                       ></md-input>
                     </md-field>
                   </div>
@@ -176,7 +176,7 @@
                       <label>Varity name</label>
                       <md-input
                         v-model="seedData.cropVarityName"
-                        :disabled="readMode"
+                        :readOnly="readMode"
                       ></md-input>
                     </md-field>
                   </div>
@@ -187,7 +187,7 @@
                       <label>Purchased from</label>
                       <md-input
                         v-model="seedData.purchasedFrom"
-                        :disabled="readMode"
+                        :readOnly="readMode"
                       ></md-input>
                     </md-field>
                   </div>
@@ -204,7 +204,7 @@
                       <label>Purchased from</label>
                       <md-input
                         :value="formatDate(seedData.seedDate)"
-                        disabled
+                        readOnly
                       ></md-input>
                     </md-field>
                   </div>
