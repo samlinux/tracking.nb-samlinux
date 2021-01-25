@@ -102,11 +102,18 @@ export default {
                     this.cropData.farmer = farmers;
                     this.cropData.inputs = inputs;
                     if (responseData.value.Seed) {
+                        let seedDate = null;
+                        if (responseData.value.Seed.SeedDate) {
+                            seedDate = new Date(responseData.value.Seed.SeedDate);
+                            if (seedDate.getFullYear() < 1900) {
+                                seedDate = null;
+                            }
+                        }
                         this.seedData = {
                             cropName2: responseData.value.Seed.CropName,
                             cropVarityName: responseData.value.Seed.CropVarityName,
                             purchasedFrom: responseData.value.Seed.PurchasedFrom,
-                            seedDate: new Date(responseData.value.Seed.SeedDate)
+                            seedDate: seedDate
                         };
                     }
                     this.cropKey = cropKey;

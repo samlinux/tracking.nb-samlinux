@@ -30,6 +30,8 @@ export default {
                 }
             }
         }
+        // delete temp. search-data
+        localStorage.removeItem('search-data');
         if (this.$router.currentRoute) {
             this.navTo(startModuleName);
         }

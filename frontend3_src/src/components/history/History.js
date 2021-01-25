@@ -7,32 +7,36 @@ export default {
         LayoutDefault,
     },
     data: () => ({
+        barcodeKey: null,
         searchResult: [],
-        keyId: "",
-        key: "",
         filterData: {},
         formError: null,
         showTracing: false,
         transactionInProgress: false
     }),
     mounted: function () {
-        /* if (this.$route.path) {
-            if (this.$route.path.indexOf("showTracing") >= 0) {
-                if (this.$route.query.key && this.$route.query.key !== "") {
-                    this.key = this.$route.query.key;
+        // here we go...
+        const tmpSearchData = localStorage.getItem('search-data');
+        if (tmpSearchData) {
+            try {
+                const tmpFilterData = JSON.parse(tmpSearchData);
+                if (tmpFilterData.fpoName) {
+                    this.filterData = tmpFilterData;
                     this.searchData();
                 }
+            } catch (e) {
+                // do nothing...
             }
-        } */
-        // here we go...
+        }
     },
     methods: {
         onBarcodeDecode(result) {
-            if (result && result !== "") {
+            /* if (result && result !== "") {
                 this.key = result;
             } else {
                 this.key = "";
-            }
+            } */
+            console.log(result);
             this.searchData();
         },
         searchData: async function () {
@@ -94,6 +98,7 @@ export default {
                     this.transactionInProgress = false;
                     this.searchResult = searchResult;
                     this.showTracing = true;
+                    localStorage.setItem("search-data", JSON.stringify(this.filterData));
                 }
             } else {
                 this.formError = 'At least the FPO name must be set to search for a crop.';
@@ -184,11 +189,18 @@ export default {
                         cropData.key = cropKey;
                         cropData.seedData = {};
                         if (responseData.value.Seed) {
+                            let seedDate = null;
+                            if (responseData.value.Seed.SeedDate) {
+                                seedDate = new Date(responseData.value.Seed.SeedDate);
+                                if (seedDate.getFullYear() < 1900) {
+                                    seedDate = null;
+                                }
+                            }
                             cropData.seedData = {
                                 cropName2: responseData.value.Seed.CropName,
                                 cropVarityName: responseData.value.Seed.CropVarityName,
                                 purchasedFrom: responseData.value.Seed.PurchasedFrom,
-                                seedDate: new Date(responseData.value.Seed.SeedDate)
+                                seedDate: seedDate
                             };
                         }
                         this.$router.push({
