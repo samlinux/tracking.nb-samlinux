@@ -134,6 +134,19 @@
   }
 }
 
+.store-form-read-mode {
+  .md-field {
+    cursor: default;
+    pointer-events: none;
+  }
+  .store-seed-btn {
+    visibility: hidden;
+  }
+  .list-add-btn {
+    display: none;
+  }
+}
+
 .md-list {
   &.md-list-repeat {
     padding: 0;

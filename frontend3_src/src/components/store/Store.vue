@@ -59,7 +59,11 @@
         </form>
       </div>
       <!-- Crop Detail -->
-      <div v-if="cropKey" class="store-sub-data md-layout md-gutter">
+      <div
+        v-if="cropKey"
+        class="store-sub-data md-layout md-gutter"
+        v-bind:class="{ 'store-form-read-mode': readMode }"
+      >
         <div v-if="transactionInProgress" class="store-sub-data-locked"></div>
         <div class="md-layout-item md-medium-size-50 md-small-size-100">
           <div class="crop-detail-container">
@@ -161,13 +165,19 @@
                   <div class="md-layout-item md-xsmall-size-100">
                     <md-field>
                       <label>Seed name</label>
-                      <md-input v-model="seedData.cropName2"></md-input>
+                      <md-input
+                        v-model="seedData.cropName2"
+                        :disabled="readMode"
+                      ></md-input>
                     </md-field>
                   </div>
                   <div class="md-layout-item md-xsmall-size-100">
                     <md-field>
                       <label>Varity name</label>
-                      <md-input v-model="seedData.cropVarityName"></md-input>
+                      <md-input
+                        v-model="seedData.cropVarityName"
+                        :disabled="readMode"
+                      ></md-input>
                     </md-field>
                   </div>
                 </div>
@@ -175,13 +185,28 @@
                   <div class="md-layout-item md-xsmall-size-100">
                     <md-field>
                       <label>Purchased from</label>
-                      <md-input v-model="seedData.purchasedFrom"></md-input>
+                      <md-input
+                        v-model="seedData.purchasedFrom"
+                        :disabled="readMode"
+                      ></md-input>
                     </md-field>
                   </div>
-                  <div class="md-layout-item md-xsmall-size-100">
+                  <div
+                    v-if="!readMode"
+                    class="md-layout-item md-xsmall-size-100"
+                  >
                     <md-datepicker v-model="seedData.seedDate" md-immediately
                       ><label>Seed date</label>
                     </md-datepicker>
+                  </div>
+                  <div v-else class="md-layout-item md-xsmall-size-100">
+                    <md-field>
+                      <label>Purchased from</label>
+                      <md-input
+                        :value="formatDate(seedData.seedDate)"
+                        disabled
+                      ></md-input>
+                    </md-field>
                   </div>
                 </div>
               </md-card-content>
@@ -193,13 +218,14 @@
                     :md-stroke="3"
                   ></md-progress-spinner>
                 </div>
-                <md-button
-                  v-else
-                  type="button"
-                  v-on:click="storeSeed"
-                  class="md-accent md-raised"
-                  >Store</md-button
-                >
+                <div v-else class="store-seed-btn">
+                  <md-button
+                    type="button"
+                    v-on:click="storeSeed"
+                    class="md-accent md-raised"
+                    >Store</md-button
+                  >
+                </div>
               </md-card-actions>
               <div class="response-container">
                 <div v-if="seedResponse" class="response response-success">

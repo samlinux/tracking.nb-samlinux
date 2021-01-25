@@ -7,6 +7,7 @@ export default {
         LayoutDefault,
     },
     data: () => ({
+        readMode: false,
         backToSearch: false,
         cropKey: null,
         cropData: null,
@@ -45,6 +46,11 @@ export default {
                 delete routerData.cropData.key;
                 delete routerData.cropData.seedData;
                 if (tmpKey) {
+                    if (routerData.cropData.readMode) {
+                        this.readMode = true;
+                    } else {
+                        this.readMode = false;
+                    }
                     this.cropData = routerData.cropData;
                     this.seedData = tmpSeedData ? tmpSeedData : {};
                     this.cropKey = tmpKey;
@@ -317,6 +323,7 @@ export default {
             this.seedData = null;
             this.seedData = {};
             this.cropKey = null;
+            this.readMode = false;
         },
         showCropImage: function (img, cropName) {
             let showImg = false,

@@ -48,7 +48,7 @@ export default {
                 if (responseData) {
                     if (responseData.key) {
                         if (responseData.key !== "noKey") {
-                            this.openKeyDetail(responseData.key);
+                            this.openKeyDetail(responseData.key, true);
                         }
                     }
                 }
@@ -155,7 +155,7 @@ export default {
             }
             return '';
         },
-        openKeyDetail: async function (cropKey) {
+        openKeyDetail: async function (cropKey, readMode) {
             if (cropKey) {
                 this.transactionInProgress = true;
                 const payload = {
@@ -217,6 +217,9 @@ export default {
                                 purchasedFrom: responseData.value.Seed.PurchasedFrom,
                                 seedDate: seedDate
                             };
+                        }
+                        if (readMode) {
+                            cropData.readMode = true;
                         }
                         this.$router.push({
                             name: "store",
