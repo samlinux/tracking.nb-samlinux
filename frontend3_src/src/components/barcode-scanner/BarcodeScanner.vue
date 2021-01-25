@@ -1,17 +1,21 @@
 <template>
   <md-dialog
-    class="scan-qr-dialog"
+    class="scan-barcode-dialog"
     :md-fullscreen="false"
     :md-active.sync="showDialog"
   >
     <md-dialog-title>Scan crop barcode</md-dialog-title>
-    <md-dialog-content class="qr-dialog-container">
+    <md-dialog-content class="barcode-dialog-container">
       <div
         class="barcode-scanner"
         v-bind:class="{ 'no-camera-available': scannerInitError }"
       >
+        <v-quagga
+          :onDetected="onBarcodeDecode"
+          :readerSize="readerSize"
+        ></v-quagga>
         <div v-if="scannerInitError" class="qr-init-error">
-          Error: {{ scannerInitError }}!
+          Error: No camera available or missing permissions!
         </div>
       </div>
     </md-dialog-content>
