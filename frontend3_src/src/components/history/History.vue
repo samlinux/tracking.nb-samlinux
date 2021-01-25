@@ -17,14 +17,14 @@
                       v-model="filterData.fpoName"
                       v-on:input="fpoChanged"
                     ></md-input>
-                    <md-button
+                    <!-- <md-button
                       class="md-icon-button barcode-btn"
                       style="margin: 0"
                       @click="showBarcodeScanner = !showBarcodeScanner"
                     >
                       <md-icon>qr_code_scanner</md-icon>
-                      <!-- <md-tooltip md-direction="left">Scan barcode</md-tooltip> -->
-                    </md-button>
+                      <md-tooltip md-direction="left">Scan barcode</md-tooltip>
+                    </md-button> -->
                   </md-field>
                 </div>
                 <div class="md-layout-item md-xsmall-size-100 md-small-size-50">
