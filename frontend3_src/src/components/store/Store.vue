@@ -65,7 +65,13 @@
           <div class="crop-detail-container">
             <md-card>
               <md-card-header>
-                <div class="md-title">Crop</div>
+                <md-button
+                  @click="goBack()"
+                  class="md-icon-button md-raised md-plain detail-back-btn"
+                >
+                  <md-icon>arrow_back</md-icon>
+                </md-button>
+                <div class="md-title detail-back-btn-margin">Crop</div>
               </md-card-header>
               <md-card-content>
                 <div class="crop-image-container">
@@ -122,7 +128,10 @@
                 </div>
               </md-card-header>
               <md-card-content>
-                <md-list v-if="cropData.farmer && cropData.farmer.length > 0">
+                <md-list
+                  class="md-list-repeat"
+                  v-if="cropData.farmer && cropData.farmer.length > 0"
+                >
                   <md-list-item
                     v-for="farmer in cropData.farmer"
                     :key="farmer.index"
@@ -216,7 +225,10 @@
                 </div>
               </md-card-header>
               <md-card-content>
-                <md-list v-if="cropData.inputs && cropData.inputs.length > 0">
+                <md-list
+                  class="md-list-repeat"
+                  v-if="cropData.inputs && cropData.inputs.length > 0"
+                >
                   <md-list-item
                     v-for="input in cropData.inputs"
                     :key="input.index"
@@ -291,7 +303,7 @@
           >
           <md-button
             v-if="!dialogTransactionInProgress"
-            class="md-raised md-primary"
+            class="md-raised md-accent"
             @click="storeFarmer()"
             >Add</md-button
           >
@@ -366,7 +378,7 @@
           >
           <md-button
             v-if="!dialogTransactionInProgress"
-            class="md-raised md-primary"
+            class="md-raised md-accent"
             @click="storeInput()"
             >Add</md-button
           >

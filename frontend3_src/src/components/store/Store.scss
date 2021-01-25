@@ -77,8 +77,22 @@
   .md-card-actions {
     padding: 0 15px 12px 15px !important;
   }
+  .detail-back-btn-margin {
+    margin-left: 50px;
+  }
   .list-add-btn {
     float: right;
+    margin-top: -4px;
+    background-color: #ffa000 !important;
+    &:hover {
+      background-color: #ff8f00 !important;
+    }
+    i {
+      color: white !important;
+    }
+  }
+  .detail-back-btn {
+    float: left;
     margin-top: -4px;
     background-color: #ffa000 !important;
     &:hover {
@@ -116,6 +130,24 @@
     .row-date-val {
       float: right;
       width: auto;
+    }
+  }
+}
+
+.md-list {
+  &.md-list-repeat {
+    padding: 0;
+    .md-list-item {
+      padding: 7px 0;
+      border-bottom: 1px solid #808080;
+
+      &:first-child {
+        padding-top: 0;
+      }
+      &:last-child {
+        border-bottom: 0;
+        padding-bottom: 0;
+      }
     }
   }
 }

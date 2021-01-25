@@ -9,12 +9,16 @@
           <md-list>
             <md-list-item class="sidebar-menu-item" @click="navTo('history')">
               <md-icon>local_shipping</md-icon>
-              <span class="md-list-item-text">{{ menuModules.history.moduleName }}</span>
+              <span class="md-list-item-text">{{
+                menuModules.history.moduleName
+              }}</span>
             </md-list-item>
 
             <md-list-item class="sidebar-menu-item" @click="navTo('store')">
               <md-icon>move_to_inbox</md-icon>
-              <span class="md-list-item-text">{{ menuModules.store.moduleName }}</span>
+              <span class="md-list-item-text">{{
+                menuModules.store.moduleName
+              }}</span>
             </md-list-item>
           </md-list>
         </md-app-drawer>
@@ -22,7 +26,7 @@
           <md-button class="md-icon-button" @click="menuVisible = !menuVisible">
             <md-icon>menu</md-icon>
           </md-button>
-          <span class="md-title">SingPost Secure Tracking</span>
+          <span class="md-title">SDG - Secure Tracking</span>
         </md-app-toolbar>
         <md-app-content>
           <router-view />
@@ -30,12 +34,10 @@
       </md-app>
     </div>
     <footer class="app-footer">
-      &copy; {{ $moment().format('YYYY') }} - supported by
-      <a
-        class="footer-link"
-        href="https://samlinux.at/"
-        target="_blank"
-      >samlinux.at</a>
+      &copy; {{ $moment().format("YYYY") }} - supported by
+      <a class="footer-link" href="https://samlinux.at/" target="_blank"
+        >samlinux.at</a
+      >
     </footer>
   </div>
 </template>

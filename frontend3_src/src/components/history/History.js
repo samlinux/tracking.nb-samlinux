@@ -16,14 +16,15 @@ export default {
         transactionInProgress: false
     }),
     mounted: function () {
-        if (this.$route.path) {
+        /* if (this.$route.path) {
             if (this.$route.path.indexOf("showTracing") >= 0) {
                 if (this.$route.query.key && this.$route.query.key !== "") {
                     this.key = this.$route.query.key;
                     this.searchData();
                 }
             }
-        }
+        } */
+        // here we go...
     },
     methods: {
         onBarcodeDecode(result) {

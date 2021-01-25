@@ -30,7 +30,7 @@
                 alt="nb-tracking"
                 title="nb-tracking"
               /> -->
-              <span class="app-logo-text">Airfreights Shipments</span>
+              <span class="app-logo-text">SDG - Airfreights Shipments</span>
             </div>
           </span>
           <div class="app-menu-button">

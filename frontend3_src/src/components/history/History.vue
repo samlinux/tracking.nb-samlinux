@@ -65,7 +65,7 @@
                   v-if="!transactionInProgress"
                   type="button"
                   v-on:click="searchData"
-                  class="md-primary md-raised"
+                  class="md-accent md-raised"
                   >Search</md-button
                 >
               </md-card-actions>

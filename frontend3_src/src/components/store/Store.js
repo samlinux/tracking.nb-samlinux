@@ -7,6 +7,7 @@ export default {
         LayoutDefault,
     },
     data: () => ({
+        backToSearch: false,
         cropKey: null,
         cropData: null,
         seedData: {},
@@ -34,6 +35,7 @@ export default {
         this.$material.locale.dateFormat = 'dd/MM/yyyy';
     },
     mounted() {
+        let hasTmpData = false;
         const routerData = this.$route.params;
         if (routerData) {
             if (routerData.cropData) {
@@ -45,8 +47,15 @@ export default {
                     this.cropData = routerData.cropData;
                     this.seedData = tmpSeedData ? tmpSeedData : {};
                     this.cropKey = tmpKey;
+                    hasTmpData = true;
                 }
             }
+        }
+        if (!hasTmpData) {
+            // delete temp. search-data
+            localStorage.removeItem('search-data');
+        } else {
+            this.backToSearch = true;
         }
     },
     methods: {
@@ -108,10 +117,6 @@ export default {
             if (this.transactionInProgress) return;
             this.response = null;
             this.formError = null;
-            /* if (this.msgTimeout) {
-                clearTimeout(this.msgTimeout);
-                delete this.msgTimeout;
-            } */
             if (this.fpoName && this.cropName && this.cropDate && this.cropDate && this.cropId) {
                 // Form-Success
                 this.transactionInProgress = true;
@@ -131,7 +136,6 @@ export default {
                 const ApiResponse = await fetch(API_LOCATION + "createCrop", requestOptions);
                 const responseData = await ApiResponse.json();
                 this.transactionInProgress = false;
-                // this.msgTimeout = setTimeout(() => { }, 2000);
                 if (responseData.key) {
                     this.response = null;
                     this.cropData = {
@@ -146,7 +150,7 @@ export default {
                     this.cropKey = responseData.key;
                     this.fpoName = '';
                     this.cropName = '';
-                    this.cropDate = '';
+                    this.cropDate = null;
                     this.cropId = '';
                 }
             } else {
@@ -185,14 +189,7 @@ export default {
                 this.seedResponse = "Seed data was set successfully.";
                 this.msgTimeout = setTimeout(() => {
                     this.seedResponse = null;
-                    this.cropData = {
-                        barCode: '',
-                        fpoName: this.fpoName,
-                        cropName: this.cropName,
-                        cropDate: this.cropDate,
-                        cropId: this.cropId
-                    }
-                }, 2000);
+                }, 4500);
 
             } else {
                 // Form-Error
@@ -290,6 +287,18 @@ export default {
             this.inputDetail = {};
             this.inputFormError = null;
             this.inputDetailActive = true;
+        },
+        goBack: function () {
+            if (this.backToSearch) {
+                this.$router.push({
+                    name: "history"
+                });
+            } else {
+                this.cropData = null;
+                this.seedData = null;
+                this.seedData = {};
+                this.cropKey = null;
+            }
         },
         showCropImage: function (img, cropName) {
             let showImg = false,

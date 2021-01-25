@@ -24,7 +24,7 @@
         <md-app-toolbar class="md-primary">
           <span class="md-title">
             <div class="app-logo">
-              <span class="app-logo-text">Crop Tracing</span>
+              <span class="app-logo-text">SDG - Crop Tracing</span>
             </div>
           </span>
           <div class="app-menu-button">
