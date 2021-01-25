@@ -12,7 +12,8 @@ export default {
         filterData: {},
         formError: null,
         showTracing: false,
-        transactionInProgress: false
+        transactionInProgress: false,
+        showBarcodeScanner: false
     }),
     mounted: function () {
         // here we go...
@@ -136,7 +137,7 @@ export default {
         },
         formatDate(value) {
             if (value) {
-                return moment(String(value)).format('DD/MM/YYYY')
+                return moment(String(value)).format('YYYY')
             }
             return '';
         },

@@ -17,6 +17,14 @@
                       v-model="filterData.fpoName"
                       v-on:input="fpoChanged"
                     ></md-input>
+                    <md-button
+                      class="md-icon-button barcode-btn"
+                      style="margin: 0"
+                      @click="showBarcodeScanner = !showBarcodeScanner"
+                    >
+                      <md-icon>qr_code_scanner</md-icon>
+                      <!-- <md-tooltip md-direction="left">Scan barcode</md-tooltip> -->
+                    </md-button>
                   </md-field>
                 </div>
                 <div class="md-layout-item md-xsmall-size-100 md-small-size-50">
@@ -78,37 +86,74 @@
         class="crop-list-container"
         v-if="showTracing && searchResult.length > 0"
       >
-        <md-table
-          v-model="searchResult"
-          md-sort="CropName"
-          md-sort-order="asc"
-          md-card
-        >
-          <md-table-toolbar>
-            <h1 class="md-title">Search result</h1>
-          </md-table-toolbar>
-
-          <md-table-row
-            slot="md-table-row"
-            slot-scope="{ item }"
-            @click="openKeyDetail(item.Key)"
+        <!-- Desktop-Table -->
+        <div class="hide-on-mobile">
+          <md-table
+            v-model="searchResult"
+            md-sort="CropName"
+            md-sort-order="asc"
+            md-card
           >
-            <md-table-cell md-label="FPO name" md-sort-by="FpoName">{{
-              item.FpoName
-            }}</md-table-cell>
-            <md-table-cell md-label="Crop name" md-sort-by="CropName">{{
-              item.CropName
-            }}</md-table-cell>
-            <md-table-cell md-label="Date" md-sort-by="CropDate">{{
-              formatDate(item.CropDate)
-            }}</md-table-cell>
-            <md-table-cell md-label="Crop ID" md-sort-by="CropId">{{
-              item.CropId
-            }}</md-table-cell>
-          </md-table-row>
-        </md-table>
+            <md-table-toolbar>
+              <h1 class="md-title">Search result</h1>
+            </md-table-toolbar>
+
+            <md-table-row
+              slot="md-table-row"
+              slot-scope="{ item }"
+              @click="openKeyDetail(item.Key)"
+            >
+              <md-table-cell md-label="FPO name" md-sort-by="FpoName">{{
+                item.FpoName
+              }}</md-table-cell>
+              <md-table-cell md-label="Crop name" md-sort-by="CropName">{{
+                item.CropName
+              }}</md-table-cell>
+              <md-table-cell md-label="Date" md-sort-by="CropDate">{{
+                formatDate(item.CropDate)
+              }}</md-table-cell>
+              <md-table-cell md-label="Crop ID" md-sort-by="CropId">{{
+                item.CropId
+              }}</md-table-cell>
+            </md-table-row>
+          </md-table>
+        </div>
+        <!-- Mobile-Table -->
+        <div class="mobile-only">
+          <md-table
+            v-model="searchResult"
+            md-sort="CropName"
+            md-sort-order="asc"
+            md-card
+          >
+            <md-table-toolbar>
+              <h1 class="md-title">Search result</h1>
+            </md-table-toolbar>
+
+            <md-table-row
+              slot="md-table-row"
+              slot-scope="{ item }"
+              @click="openKeyDetail(item.Key)"
+            >
+              <md-table-cell md-label="FPO" md-sort-by="FpoName">{{
+                item.FpoName
+              }}</md-table-cell>
+              <md-table-cell md-label="Crop" md-sort-by="CropName">{{
+                item.CropName
+              }}</md-table-cell>
+              <md-table-cell md-label="Date / ID" md-sort-by="CropDate">{{
+                formatDate(item.CropDate) + " / " + item.CropId
+              }}</md-table-cell>
+            </md-table-row>
+          </md-table>
+        </div>
       </div>
     </div>
+    <!-- Component: BarcodeScanner -->
+    <BarcodeScanner
+      v-bind:openDialog="showBarcodeScanner"
+      v-on:barcodeScanned="onBarcodeDecode"
+    />
   </layout-default>
 </template>
 

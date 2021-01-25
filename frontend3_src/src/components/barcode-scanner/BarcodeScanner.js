@@ -1,5 +1,5 @@
 export default {
-    name: "QrCodeScanner",
+    name: "BarcodeScanner",
     props: {
         openDialog: Boolean,
     },
@@ -11,7 +11,7 @@ export default {
     components: {},
     data: () => ({
         scanResult: "",
-        qrInitError: null,
+        scannerInitError: null,
         showDialog: false,
     }),
     methods: {
@@ -20,11 +20,11 @@ export default {
         },
         closeDialog(scanSuccess) {
             if (scanSuccess) {
-                this.$emit("qrCodeScanned", this.scanResult);
+                this.$emit("barcodeScanned", this.scanResult);
             }
             this.showDialog = false;
         },
-        onQrDecode(result) {
+        onBarcodeDecode(result) {
             let scanResult = "";
             if (result && result !== "") {
                 if (result.indexOf("pid=") >= 0) {
@@ -43,25 +43,25 @@ export default {
         async onQrInit(promise) {
             try {
                 await promise;
-                delete this.qrInitError;
+                delete this.scannerInitError;
             } catch (error) {
                 if (error.name === "NotAllowedError") {
-                    this.qrInitError = "You need to grant camera access permisson";
+                    this.scannerInitError = "You need to grant camera access permisson";
                 } else if (error.name === "NotFoundError") {
-                    this.qrInitError = "No camera available";
+                    this.scannerInitError = "No camera available";
                 } else if (error.name === "NotReadableError") {
-                    this.qrInitError = "Is the camera already in use?";
+                    this.scannerInitError = "Is the camera already in use?";
                 } else if (error.name === "OverconstrainedError") {
-                    this.qrInitError = "Installed cameras are not suitable";
+                    this.scannerInitError = "Installed cameras are not suitable";
                 } else if (error.name === "StreamApiNotSupportedError") {
-                    this.qrInitError =
+                    this.scannerInitError =
                         "This browser does not support using this device's camera";
                 } else if (
                     ["NotSupportedError", "InsecureContextError"].indexOf(error.name) >= 0
                 ) {
-                    this.qrInitError = "Secure context required (HTTPS)";
+                    this.scannerInitError = "Secure context required (HTTPS)";
                 } else {
-                    this.qrInitError = "No camera access available";
+                    this.scannerInitError = "No camera access available";
                 }
             }
         },
