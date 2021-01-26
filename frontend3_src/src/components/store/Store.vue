@@ -173,7 +173,7 @@
                   </div>
                   <div class="md-layout-item md-xsmall-size-100">
                     <md-field>
-                      <label>Varity name</label>
+                      <label>Variety name</label>
                       <md-input
                         v-model="seedData.cropVarityName"
                         :readOnly="readMode"
